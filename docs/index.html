@@ -178,6 +178,7 @@ form{display:grid;gap:14px;margin-top:16px}
 .send-row{display:grid;gap:10px}
 .status{min-height:1.4em;font-size:.88rem;color:var(--accent)}
 
+.more-row{display:flex;justify-content:center;margin-top:30px}
 footer{padding-block:34px 90px}
 .foot-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:baseline}
 .foot-row p{color:var(--muted);font-size:.88rem}
@@ -234,6 +235,7 @@ body{margin:0}
       <div class="chips" id="chips" role="group" aria-label="Filter by type"></div>
     </div>
     <div class="grid" id="grid"></div>
+    <div class="more-row"><button class="btn ghost" type="button" id="more" hidden>Show more</button></div>
   </section>
 
   <section class="band section" id="craft">
@@ -318,71 +320,84 @@ body{margin:0}
   var WA_NUMBER = '';
   function wa(text){ return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text); }
 
-  var BRASS = '#C9A24B';
-  var ST = 'stroke-linecap="round" fill="none"';
-  function stitch(d){ return '<path d="'+d+'" fill="none" stroke="#ffffff" stroke-opacity=".38" stroke-width="1.4" stroke-dasharray="3 3"/>'; }
-  var SHAPES = {
-    tote: function(c,d){ return '<ellipse cx="100" cy="188" rx="64" ry="5" fill="#000000" fill-opacity=".22"/>'+
-      '<path d="M68 84 C66 28 134 28 132 84" stroke="'+d+'" stroke-width="7" '+ST+'/>'+
-      '<path d="M38 80 H162 L172 176 Q173 184 165 184 H35 Q27 184 28 176 Z" fill="'+c+'"/>'+
-      '<path d="M38 80 H162 L163 98 H37 Z" fill="'+d+'"/>'+
-      stitch('M44 112 H156')+
-      '<circle cx="68" cy="84" r="4" fill="'+BRASS+'"/><circle cx="132" cy="84" r="4" fill="'+BRASS+'"/>'+
-      '<rect x="90" y="132" width="20" height="26" rx="3" fill="'+BRASS+'"/>'; },
-    crossbody: function(c,d){ return '<ellipse cx="100" cy="176" rx="58" ry="5" fill="#000000" fill-opacity=".22"/>'+
-      '<path d="M52 98 C36 14 164 14 148 98" stroke="'+d+'" stroke-width="6" '+ST+'/>'+
-      '<rect x="44" y="92" width="112" height="76" rx="12" fill="'+c+'"/>'+
-      '<path d="M44 104 Q44 92 56 92 H144 Q156 92 156 104 V122 Q100 150 44 122 Z" fill="'+d+'"/>'+
-      stitch('M54 158 H146')+
-      '<circle cx="100" cy="136" r="6" fill="'+BRASS+'"/>'+
-      '<circle cx="52" cy="98" r="4" fill="'+BRASS+'"/><circle cx="148" cy="98" r="4" fill="'+BRASS+'"/>'; },
-    backpack: function(c,d){ return '<ellipse cx="100" cy="188" rx="52" ry="5" fill="#000000" fill-opacity=".22"/>'+
-      '<path d="M60 90 C36 112 36 152 62 174" stroke="'+d+'" stroke-width="8" '+ST+'/>'+
-      '<path d="M140 90 C164 112 164 152 138 174" stroke="'+d+'" stroke-width="8" '+ST+'/>'+
-      '<path d="M86 58 C86 34 114 34 114 58" stroke="'+d+'" stroke-width="6" '+ST+'/>'+
-      '<rect x="54" y="52" width="92" height="132" rx="30" fill="'+c+'"/>'+
-      '<rect x="66" y="116" width="68" height="56" rx="14" fill="'+d+'"/>'+
-      '<path d="M72 116 H128" stroke="'+BRASS+'" stroke-width="3" '+ST+'/>'+
-      stitch('M68 88 H132')+
-      '<circle cx="100" cy="88" r="4" fill="'+BRASS+'"/>'; },
-    duffel: function(c,d){ return '<ellipse cx="100" cy="168" rx="80" ry="5" fill="#000000" fill-opacity=".22"/>'+
-      '<path d="M68 94 C68 50 132 50 132 94" stroke="'+d+'" stroke-width="7" '+ST+'/>'+
-      '<rect x="22" y="88" width="156" height="76" rx="36" fill="'+c+'"/>'+
-      '<rect x="72" y="120" width="56" height="32" rx="8" fill="'+d+'"/>'+
-      '<path d="M44 106 H156" stroke="'+BRASS+'" stroke-width="3" '+ST+'/>'+
-      stitch('M52 156 H148')+
-      '<circle cx="68" cy="94" r="4" fill="'+BRASS+'"/><circle cx="132" cy="94" r="4" fill="'+BRASS+'"/>'; }
-  };
+  /* Price shown on BagZee = source price + MARKUP (PKR). */
+  var MARKUP = 300;
+  var SRC = 'https://atailorson.com/cdn/shop/files/';
 
-  var P = [
-    {id:'saddle', name:'Saddle Crossbody', type:'Crossbody', color:'Cognac tan', price:9800,
-      imgs:['img/saddle-studio.webp','img/saddle-worn.webp','img/saddle-held.webp'],
-      blurb:'Half-moon flap bag with a gold-tone clasp, a top handle and a long adjustable strap.'},
-    {id:'teddy', name:'Teddy Tote', type:'Totes', color:'Black', price:12900,
-      imgs:['img/teddy-tote.webp'],
-      blurb:'Open-top black tote with slim straps and a chenille teddy patch on the front.'},
-    {id:'pouch', name:'Wash Pouch', type:'Travel', color:'Navy', price:4500,
-      imgs:['img/wash-pouch.webp'],
-      blurb:'Zip-top toiletry pouch in navy canvas with a leather-look base and a carry loop.'},
-    {id:'marlo', name:'Marlo Tote', type:'Totes', shape:'tote', color:'Bottle green', c:'#2F6B52', d:'#1E4A38', price:14500, cap:'18 L', dim:'38 × 30 × 12 cm', blurb:'Zip-top everyday tote with a padded 15-inch laptop sleeve.'},
-    {id:'roam', name:'Roam Backpack', type:'Backpacks', shape:'backpack', color:'Graphite', c:'#2B2F33', d:'#16191B', price:16900, cap:'22 L', dim:'44 × 30 × 14 cm', blurb:'Roll-free daypack with a front zip pocket and laptop sleeve.'},
-    {id:'voyage', name:'Voyage Duffel', type:'Travel', shape:'duffel', color:'Oxblood', c:'#7A2A2F', d:'#4F171B', price:21500, cap:'45 L', dim:'56 × 28 × 26 cm', blurb:'Carry-on duffel with a wide opening and a shoe-sized side pocket.'},
-    {id:'slate', name:'Slate Work Tote', type:'Totes', shape:'tote', color:'Slate blue', c:'#33506F', d:'#213750', price:17800, cap:'20 L', dim:'40 × 32 × 12 cm', blurb:'Structured tote that stands on its own and holds files flat.'},
-    {id:'petit', name:'Petit Sling', type:'Crossbody', shape:'crossbody', color:'Stone', c:'#8C8A82', d:'#64625B', price:6900, cap:'1.5 L', dim:'20 × 14 × 6 cm', blurb:'Phone, keys and cards in a small sling that sits close.'},
-    {id:'campus', name:'Campus Pack', type:'Backpacks', shape:'backpack', color:'Saddle tan', c:'#B7824A', d:'#8A5A2B', price:12400, cap:'18 L', dim:'42 × 29 × 12 cm', blurb:'Lighter pack for books and a laptop, with padded straps.'},
-    {id:'week', name:'Weekender Duffel', type:'Travel', shape:'duffel', color:'Bottle green', c:'#2F6B52', d:'#1E4A38', price:19200, cap:'35 L', dim:'50 × 26 × 24 cm', blurb:'Two-night duffel with a shoulder strap and a zipped inner pocket.'}
+  /* [id, name, type, source price, image file or local path] */
+  var RAW = [
+    ['saddle','Brown Sugar Saddle Bag','Handbags',3550,['img/saddle-studio.webp','img/saddle-worn.webp','img/saddle-held.webp']],
+    ['teddy','Black Teddy Tote Bag','Handbags',3850,['img/teddy-tote.webp']],
+    ['sienna','Sienna Knot Suede Bag','Handbags',3750,'Brown_suede_shoulder_bag_with_knot_detailing.png?v=1778943225&width=533'],
+    ['basic-black','Basic Black Tote Bag','Handbags',3350,'simplebthugc.jpg?v=1736276224&width=533'],
+    ['basic-brown','Basic Brown Tote Bag','Handbags',3350,'Basic_Brown_tote_bag.png?v=1747739105&width=533'],
+    ['bear','Vintage Bear Shoulder Bag','Handbags',3450,'Mr_Bean_Shoulder_Hand_Bag_by_A_Tailor_Son_featuring_a_compact_unisex_design_with_adjustable_shoulder_strap_premium_rexine_material_secure_zip_closure_and_stylish_everyday_carry_look_suitable_for_casual_outings_travel_and_daily_use._Minimal.jpg?v=1778592480&width=533'],
+    ['black-saddle','Black Saddle Bag','Handbags',3550,'WhatsAppImage2025-09-29at1.52.19PM.jpg?v=1759303019&width=533'],
+    ['olive','Olive Handbag','Handbags',3750,'WhatsAppImage2024-06-01at4.05.40PM.jpg?v=1717240047&width=533'],
+    ['mag-brown','Magnetic Brown Tote Bag','Handbags',3750,'WhatsAppImage2025-09-23at12.10.37PM.jpg?v=1758791763&width=533'],
+    ['lilac','Lilac Black Tote','Handbags',3750,'1_3fdb3b33-8b1f-49fb-887b-2f561958ba8c.jpg?v=1736276377&width=533'],
+    ['mag-black','Magnetic Black Tote Bag','Handbags',3750,'Polene_Tote_bag.png?v=1747738355&width=533'],
+    ['panda','Panda Tote Bag','Handbags',3750,'1d_41d9c1c1-0bd9-45c5-9c2b-b3511a139031.jpg?v=1737199491&width=533'],
+
+    ['tokyo','Tokyo Cross Bag with AirPods Pouch','Crossbody',2690,'tokyougc.jpg?v=1737111431&width=533'],
+    ['black-cross','Black Crossbody Bag','Crossbody',2550,'5_5d359a9b-75e5-4d93-a5d8-9ab8a221fa15.jpg?v=1740052017&width=533'],
+    ['premium-cross','Premium Cross Body Bag','Crossbody',4000,'15_1.jpg?v=1736315388&width=533'],
+    ['waist-black','Multi Accessories Waist Belt, Black','Crossbody',4550,'black_multi_pocket_waist_belt_bag_faux_leather_utility_belt_organizer_with_pouches.png?v=1775756627&width=533'],
+    ['waist-brown','Multi Accessories Waist Belt, Brown','Crossbody',4550,'brown_utility_waist_belt_bag_for_women_multi_pocket_hands_free_belt_pouch_stylish.png?v=1775881151&width=533'],
+    ['teddy-cross','Teddy Cross Bag','Crossbody',2850,'teddy1_6f6399f6-ad08-4ff4-8966-8a822e83875c.jpg?v=1717240994&width=533'],
+    ['trex-cross','T-Rex Cross Bag','Crossbody',2850,'final_91b4d2e8-c527-4526-90f9-7b66179802ad.jpg?v=1714910320&width=533'],
+    ['monogram','Black 3D Monogram Cross Bag','Crossbody',2450,'black1.jpg?v=1697229004&width=533'],
+    ['croissant','Croissant Cross Bag','Crossbody',2790,'3445.jpg?v=1701932663&width=533'],
+    ['la-cross','LA Cross Bag','Crossbody',2450,'la2.jpg?v=1752906021&width=533'],
+
+    ['mark','Mark Backpack','Backpacks',6990,'1_6.png?v=1765091695&width=533'],
+    ['brown-mark','Brown Mark Backpack','Backpacks',6990,'Brown_Leather_Laptop_Backpack_for_Men_Vintage_Style_Travel_Bag.png?v=1772636167&width=533'],
+    ['vens','Vens Backpack','Backpacks',5250,'mainwithwaterbottle.jpg?v=1714570675&width=533'],
+    ['turtle','Tall Turtle Backpack','Backpacks',5250,'9.jpg?v=1709814372&width=533'],
+    ['teddy-bp','Teddy Backpack','Backpacks',4450,'teddy1_1_c1d46f89-6793-4ece-94cf-d932ff467625.jpg?v=1738610289&width=533'],
+    ['la-bp','LA Backpack','Backpacks',4800,'1_6f8ed650-cb2e-4f61-8eeb-51f5b14bff71.png?v=1775403773&width=533'],
+    ['cairo','Cairo Backpack','Backpacks',4800,'1c.png?v=1775402360&width=533'],
+    ['ace','Black Ace Backpack','Backpacks',5500,'13.jpg?v=1709995378&width=533'],
+    ['mid','Mid Black Backpack','Backpacks',4800,'midblack1.jpg?v=1708064764&width=533'],
+    ['snake','Embroidered Snake Backpack','Backpacks',4450,'8.jpg?v=1709995094&width=533'],
+    ['trex-bp','T-Rex Backpack','Backpacks',4450,'t-rex1.jpg?v=1727681287&width=533'],
+
+    ['teddy-duffle','Teddy Duffle Bag','Duffles',6990,'Untitled-2.jpg?v=1691860724&width=533'],
+    ['gg-stripe','GG Stripe Duffle Bag','Duffles',5500,'12_33008c96-2e22-4dcb-9432-564ee60eb158.jpg?v=1709995159&width=533'],
+    ['choco','Choco Cuddle Duffle','Duffles',5990,'Choco_Cuddle_Duffle.png?v=1747733828&width=533'],
+    ['coal','Coal-Black Duffle Bag','Duffles',6500,'coalduffleugc_1f23d169-1f6a-4a4a-b133-6aeafaa12d04.jpg?v=1729492216&width=533'],
+    ['basic-duffle','Basic Black Duffle Bag','Duffles',4990,'basicduffleugc3.jpg?v=1737115824&width=533'],
+    ['coffee','Coffee Duffle Bag','Duffles',4990,'coffeeduffleugc4.jpg?v=1731391937&width=533'],
+    ['hybrid','Hybrid Garment Duffle Bag','Duffles',7000,'1.jpg?v=1718458498&width=533'],
+    ['teal','Teal Duffle Bag','Duffles',4990,'Teal_duffle_bag.png?v=1747738533&width=533'],
+    ['salt','Salt Duffle Bag','Duffles',4990,'Salt_duffle_bag.png?v=1747739047&width=533'],
+    ['steel','Steel Blue Duffle Bag','Duffles',4990,'Steel_blue_duffle_bag.png?v=1747738415&width=533'],
+    ['blush','Blush Duffle Bag','Duffles',4990,'Blush_duffle_bag.png?v=1747739007&width=533'],
+    ['burgundy','Burgundy Duffle Bag','Duffles',4990,'Burgundy_duffle_bag.png?v=1747738879&width=533'],
+
+    ['tech-organizer','Tech Organizer Pouch','Pouches',4250,'travel_tech_organizer_pouch_for_cables_and_chargers.png?v=1772718800&width=533'],
+    ['tech-pouch','Tech Pouch Organizer','Pouches',2650,'TECH_ORGANIZER_BLACK_LIFESTYLE3_3a430b31-b766-4407-8b1d-34f01e7003c7.jpg?v=1692867817&width=533'],
+    ['suede-toiletry','Suede Toiletry Bag','Pouches',2850,'q1.jpg?v=1709233315&width=533'],
+    ['black-toiletry','Black Toiletry Bag','Pouches',2850,'1_9.jpg?v=1741086782&width=533'],
+    ['navy-toiletry','Navy Suede Toiletry Bag','Pouches',2850,'1_5265e2e2-7972-414e-991e-6e82b5b28062.jpg?v=1709229585&width=533'],
+    ['olive-toiletry','Olive Suede Toiletry Bag','Pouches',2850,'1_1.jpg?v=1709229711&width=533'],
+    ['berry','Berry Toiletry Bag','Pouches',2850,'BERRY_TOILETRY_BAG.png?v=1747739256&width=533'],
+    ['cream','Cream White Suede Toiletry Bag','Pouches',2850,'cream_white_suede_toiletry_bag_travel_organizer.png?v=1773499156&width=533']
   ];
-  var TYPES = ['All','Totes','Crossbody','Backpacks','Travel'];
+  var P = RAW.map(function(r){
+    var imgs = Array.isArray(r[4]) ? r[4] : [r[4].indexOf('/') === -1 ? SRC + r[4] : r[4]];
+    return {id:r[0], name:r[1], type:r[2], price:r[3] + MARKUP, imgs:imgs};
+  });
+  var TYPES = ['All','Handbags','Crossbody','Backpacks','Duffles','Pouches'];
+  var PAGE = 12;
 
   function $(s){ return document.querySelector(s); }
   function fmt(n){ return 'PKR ' + n.toLocaleString('en-US'); }
   function byId(id){ for (var i=0;i<P.length;i++){ if (P[i].id===id) return P[i]; } return null; }
-  function alt(p){ return p.name + ' in ' + p.color; }
-  function art(p){ return '<svg viewBox="0 0 200 200" role="img" aria-label="'+alt(p)+'">'+SHAPES[p.shape](p.c,p.d)+'</svg>'; }
-  function spec(p){ return [p.color, p.cap, p.dim].filter(Boolean).join(' · '); }
   var ICON = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>';
 
   var filter = 'All';
+  var shown = PAGE;
   var basket = {};
   try {
     var saved = JSON.parse(localStorage.getItem('bagzee-basket') || '{}');
@@ -400,38 +415,37 @@ body{margin:0}
   chips.addEventListener('click', function(e){
     var b = e.target.closest('.chip'); if (!b) return;
     filter = b.getAttribute('data-type');
+    shown = PAGE;
     Array.prototype.forEach.call(chips.children, function(c){ c.setAttribute('aria-pressed', c.getAttribute('data-type')===filter); });
     renderGrid();
   });
 
   function tile(p){
-    if (p.imgs){
-      var th = p.imgs.length > 1 ? '<div class="thumbs">' + p.imgs.map(function(s,i){
-        return '<button class="th" type="button" data-pid="'+p.id+'" data-i="'+i+'" aria-label="Show photo '+(i+1)+' of '+p.name+'" aria-pressed="'+(i===0)+'"><img src="'+s+'" alt=""></button>';
-      }).join('') + '</div>' : '';
-      return '<div class="tile photo"><span class="tag">'+p.type+'</span><img class="main" src="'+p.imgs[0]+'" alt="'+alt(p)+'" loading="lazy">'+th+'</div>';
-    }
-    return '<div class="tile"><span class="tag">'+p.type+'</span>'+art(p)+'</div>';
-  }
-  function thumb(p){
-    return p.imgs ? '<div class="thumb photo"><img src="'+p.imgs[0]+'" alt=""></div>' : '<div class="thumb">'+art(p)+'</div>';
+    var th = p.imgs.length > 1 ? '<div class="thumbs">' + p.imgs.map(function(s,i){
+      return '<button class="th" type="button" data-pid="'+p.id+'" data-i="'+i+'" aria-label="Show photo '+(i+1)+' of '+p.name+'" aria-pressed="'+(i===0)+'"><img src="'+s+'" alt="" referrerpolicy="no-referrer"></button>';
+    }).join('') + '</div>' : '';
+    return '<div class="tile photo"><span class="tag">'+p.type+'</span><img class="main" src="'+p.imgs[0]+'" alt="'+p.name+'" loading="lazy" referrerpolicy="no-referrer">'+th+'</div>';
   }
 
   function renderGrid(){
-    $('#grid').innerHTML = P.filter(function(p){ return filter==='All' || p.type===filter; }).map(function(p){
-      var msg = 'Hi BagZee, I would like to order the ' + p.name + ' (' + p.color + ') at ' + fmt(p.price) + '.';
+    var list = P.filter(function(p){ return filter==='All' || p.type===filter; });
+    $('#grid').innerHTML = list.slice(0, shown).map(function(p){
+      var msg = 'Hi BagZee, I would like to order the ' + p.name + ' at ' + fmt(p.price) + '.';
       return '<article class="card">'+
         tile(p)+
         '<div class="card-top"><h3>'+p.name+'</h3><span class="price">'+fmt(p.price)+'</span></div>'+
-        '<p class="spec">'+spec(p)+'</p>'+
-        '<p class="blurb">'+p.blurb+'</p>'+
         '<div class="actions">'+
           '<button class="btn ghost" type="button" data-add="'+p.id+'">Add to order</button>'+
           '<a class="btn wa" href="'+wa(msg)+'" target="_blank" rel="noopener">'+ICON+'WhatsApp</a>'+
         '</div>'+
       '</article>';
     }).join('');
+    var more = $('#more'), left = list.length - shown;
+    more.hidden = left <= 0;
+    more.textContent = 'Show more (' + left + ' left)';
   }
+  $('#more').addEventListener('click', function(){ shown += PAGE; renderGrid(); });
+
   $('#grid').addEventListener('click', function(e){
     var th = e.target.closest('.th');
     if (th){
@@ -457,8 +471,8 @@ body{margin:0}
     $('#lines').innerHTML = ids.map(function(id){
       var p = byId(id), q = basket[id]; n += q; total += q*p.price;
       return '<li class="line">'+
-        thumb(p)+
-        '<div class="info"><div class="nm">'+p.name+'</div><div class="sub">'+p.color+' · '+fmt(p.price)+'</div></div>'+
+        '<div class="thumb photo"><img src="'+p.imgs[0]+'" alt="" referrerpolicy="no-referrer"></div>'+
+        '<div class="info"><div class="nm">'+p.name+'</div><div class="sub">'+fmt(p.price)+'</div></div>'+
         '<div class="right">'+
           '<div class="qty"><button type="button" data-dec="'+id+'" aria-label="Fewer '+p.name+'">−</button><span aria-live="polite">'+q+'</span><button type="button" data-inc="'+id+'" aria-label="More '+p.name+'">+</button></div>'+
           '<span class="lt">'+fmt(q*p.price)+'</span>'+
@@ -484,7 +498,7 @@ body{margin:0}
   function buildSummary(){
     var ids = Object.keys(basket).filter(function(id){ return byId(id); });
     var total = 0;
-    var lines = ids.map(function(id){ var p = byId(id), q = basket[id]; total += q*p.price; return '- ' + q + ' × ' + p.name + ' (' + p.color + ') — ' + fmt(q*p.price); });
+    var lines = ids.map(function(id){ var p = byId(id), q = basket[id]; total += q*p.price; return '- ' + q + ' × ' + p.name + ' — ' + fmt(q*p.price); });
     var v = function(id){ return ($(id).value || '').trim() || '—'; };
     var text =
       'BagZee order\n' +
