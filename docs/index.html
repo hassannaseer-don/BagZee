@@ -9,6 +9,8 @@
 <meta property="og:title" content="bag.Ze | Handcrafted Bags &amp; Leather Goods">
 <meta property="og:description" content="Handbags, crossbody bags, backpacks, duffles and pouches. Order in one tap on WhatsApp.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://hassannaseer-don.github.io/BagZee/img/saddle-worn.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%232c1e13%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-family=%27Georgia,serif%27 font-size=%2738%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23e9d3a1%27%3Eb%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -66,7 +68,7 @@ img{max-width:100%}
 .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;margin-right:auto}
 .logo b{font-family:var(--serif);font-size:1.7rem;font-weight:700;letter-spacing:-.01em;color:var(--s900)}
 .logo b span{color:var(--amber)}
-.logo small{font-size:.54rem;letter-spacing:.26em;text-transform:uppercase;color:var(--b700);font-weight:700;margin-top:3px}
+.logo small{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--b700);font-weight:700;margin-top:3px}
 .nav{display:none;gap:28px;margin:0 auto 0 28px}
 .nav a{font-size:.88rem;font-weight:500;color:var(--s600);text-decoration:none}
 .nav a:hover{color:var(--b700)}
@@ -95,14 +97,15 @@ img{max-width:100%}
 .hero-chip .go{display:grid;place-items:center;width:38px;height:38px;border-radius:999px;background:var(--b600);flex:none}
 
 /* category cards */
-.cats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:-54px;position:relative;z-index:2}
+.cats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:-54px;position:relative;z-index:2}
 .cats>:last-child:nth-child(odd){grid-column:1/-1}
-@media (min-width:900px){.cats{grid-template-columns:repeat(5,1fr);gap:16px}.cats>:last-child:nth-child(odd){grid-column:auto}}
-.cat{display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:1px solid rgba(214,211,209,.8);border-radius:18px;padding:14px;box-shadow:0 2px 10px rgba(44,30,19,.06);transition:border-color .15s,box-shadow .15s}
+@media (min-width:900px){.cats{grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}.cats>:last-child:nth-child(odd){grid-column:auto}}
+.cat{min-width:0;display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:1px solid rgba(214,211,209,.8);border-radius:18px;padding:14px;box-shadow:0 2px 10px rgba(44,30,19,.06);transition:border-color .15s,box-shadow .15s}
 .cat:hover{border-color:var(--b300);box-shadow:0 8px 24px rgba(44,30,19,.1)}
 .cat .ci{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--b50);color:var(--b700);flex:none;transition:background .15s,color .15s}
 .cat:hover .ci{background:var(--b600);color:#fff}
-.cat h3{font-size:.88rem;font-weight:700;color:var(--s800)}
+.cat h3{font-size:.88rem;font-weight:700;color:var(--s800);overflow-wrap:anywhere}
+.cat>span:last-child{min-width:0}
 .cat p{font-size:.7rem;color:var(--s500)}
 
 /* collection */
@@ -130,6 +133,7 @@ img{max-width:100%}
 .tile{position:relative;aspect-ratio:1/1;background:var(--b100)}
 .tile>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .tile>img.broken{visibility:hidden}
+.tile.noimg::before{content:'Photo coming soon';position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:12px;font-size:.78rem;color:var(--b700);font-weight:600}
 .tile-btn{position:absolute;display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:999px;background:rgba(255,255,255,.94);color:var(--b800);box-shadow:0 2px 8px rgba(0,0,0,.14)}
 .tile-btn.heart{top:8px;right:8px}
 .tile-btn.eye{bottom:8px;right:8px}
@@ -139,6 +143,10 @@ img{max-width:100%}
 .card .cat-l{font-size:.64rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--s400)}
 .card h3{font-size:.9rem;font-weight:600;line-height:1.3;color:var(--s900);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
 .price{font-family:var(--serif);font-weight:700;font-size:1.05rem;color:var(--b800)}
+.price-row{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 8px}
+.was{font-family:var(--sans);font-size:.8rem;font-weight:500;color:var(--s500);text-decoration:line-through}
+.sale{position:absolute;top:8px;left:8px;z-index:2;background:var(--b900);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.04em;padding:4px 9px;border-radius:999px}
+.qv-info .was{font-size:1rem}
 .card .btn{min-height:44px;padding:0 12px;font-size:.84rem;margin-top:auto}
 .empty{grid-column:1/-1;text-align:center;padding:48px 16px;color:var(--s500)}
 .more-row{display:flex;justify-content:center;margin-top:28px}
@@ -165,8 +173,8 @@ footer{background:var(--b950);color:var(--s400);padding:44px 0 calc(96px + env(s
 footer .logo b{color:#fff}
 footer .logo small{color:var(--b300)}
 footer h4{margin:0 0 10px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
-footer li{margin:7px 0;font-size:.88rem}
-footer a,footer button.lnk{color:var(--s300);text-decoration:none;background:none;border:0;padding:0;font-size:.88rem;text-align:left}
+footer li{margin:0;font-size:.88rem}
+footer a,footer button.lnk{display:inline-flex;align-items:center;min-height:40px;color:var(--s300);text-decoration:none;background:none;border:0;padding:0;font-size:.88rem;text-align:left}
 footer a:hover,footer button.lnk:hover{color:#fff}
 footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
 .legal{margin-top:30px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);font-size:.78rem}
@@ -225,6 +233,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
 @media (min-width:760px){.qv{grid-template-columns:1fr 1fr}}
 .qv-media{background:var(--b100)}
 .qv-main{aspect-ratio:1/1;position:relative}
+.qv-main.noimg::before{content:'Photo coming soon';position:absolute;inset:0;display:grid;place-items:center;font-size:.9rem;color:var(--b700);font-weight:600}
 .qv-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .qv-thumbs{display:flex;gap:8px;padding:10px}
 .qv-thumbs button{width:56px;height:56px;padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;background:#fff;opacity:.8}
@@ -278,7 +287,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
         <p class="lead">Totes, crossbody bags, backpacks, duffles and pouches made for everyday life. Choose yours and send your order in one tap on WhatsApp.</p>
         <div class="hero-cta">
           <a class="btn primary" href="#collection">Explore Collection <svg class="i"><use href="#i-arrow"/></svg></a>
-          <a class="btn wa" id="waHero" href="https://wa.me/" target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>Order on WhatsApp</a>
+          <a class="btn wa" id="waHero" href="https://wa.me/923154676618" target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>Order on WhatsApp</a>
         </div>
       </div>
       <div class="hero-photo">
@@ -311,6 +320,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     </div>
     <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
     <p class="count" id="count" aria-live="polite"></p>
+    <noscript><p class="count">The bag list needs JavaScript. To order without it, message us on <a href="https://wa.me/923154676618?text=Hi%20bag.Ze%2C%20I%20would%20like%20to%20place%20an%20order.">WhatsApp</a> or call 0315 4676618.</p></noscript>
     <div class="grid" id="grid"></div>
     <div class="more-row"><button class="btn line" type="button" id="more" data-act="more" hidden>Show more</button></div>
   </section>
@@ -356,7 +366,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
         <h4>Help</h4>
         <ul>
           <li><a href="#order-how">How ordering works</a></li>
-          <li><a id="waFoot" href="https://wa.me/" target="_blank" rel="noopener">Order on WhatsApp</a></li>
+          <li><a id="waFoot" href="https://wa.me/923154676618" target="_blank" rel="noopener">Order on WhatsApp</a></li>
           <li><button class="lnk" type="button" data-act="cart">Your order list</button></li>
         </ul>
         <h4 style="margin-top:22px">Contact</h4>
@@ -370,7 +380,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   </div>
 </footer>
 
-<a class="wa-float" id="waFloat" href="https://wa.me/" target="_blank" rel="noopener" aria-label="Chat with bag.Ze on WhatsApp"><svg class="i"><use href="#i-wa"/></svg><span>WhatsApp</span></a>
+<a class="wa-float" id="waFloat" href="https://wa.me/923154676618" target="_blank" rel="noopener" aria-label="Chat with bag.Ze on WhatsApp"><svg class="i"><use href="#i-wa"/></svg><span>WhatsApp</span></a>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="scrim" id="scrim" data-act="close"></div>
 
@@ -401,7 +411,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   </div>
   <div class="dr-foot" id="cartFoot" hidden>
     <div class="tot"><span>Total</span><span id="cartTotal">PKR 0</span></div>
-    <a class="btn wa block" id="waOrder" href="https://wa.me/" target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>Send order on WhatsApp</a>
+    <a class="btn wa block" id="waOrder" href="https://wa.me/923154676618" target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>Send order on WhatsApp</a>
     <button class="btn line block" type="button" data-act="copy">Copy order summary</button>
     <p class="status" id="status" role="status" aria-live="polite"></p>
   </div>
@@ -452,6 +462,11 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   /* Price shown = source price + MARKUP (PKR). */
   var MARKUP = 300;
   var SRC = 'https://atailorson.com/cdn/shop/files/';
+
+  /* Crossed-out regular price. Keep this on only if bag.Ze will really charge the regular price after pre-orders end.
+     SHOW_WAS = false removes every crossed-out price and discount badge. */
+  var SHOW_WAS = true;
+  var WAS_PCT = 15;
 
   var RAW = [
     ['saddle','Brown Sugar Saddle Bag','Handbags',3550,['img/saddle-studio.webp','img/saddle-worn.webp','img/saddle-held.webp']],
@@ -515,7 +530,9 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
 
   var P = RAW.map(function(r, n){
     var imgs = Array.isArray(r[4]) ? r[4] : [r[4].indexOf('/') === -1 ? SRC + r[4] : r[4]];
-    return {id:r[0], name:r[1], type:r[2], price:r[3] + MARKUP, imgs:imgs, n:n};
+    var price = r[3] + MARKUP;
+    var was = Math.ceil(price * (1 + WAS_PCT/100) / 50) * 50;
+    return {id:r[0], name:r[1], type:r[2], price:price, was:was, off:Math.round((was-price)/was*100), imgs:imgs, n:n};
   });
   var CATS = [
     {t:'Handbags', sub:'Totes & shoulder bags', ico:'i-handbag'},
@@ -529,6 +546,10 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   function $(s){ return document.querySelector(s); }
   function fmt(n){ return 'PKR ' + n.toLocaleString('en-US'); }
   function byId(id){ for (var i=0;i<P.length;i++){ if (P[i].id===id) return P[i]; } return null; }
+  function priceHtml(p){
+    return '<span class="price-row"><span class="price">'+fmt(p.price)+'</span>'+(SHOW_WAS ? '<s class="was" aria-label="Regular price '+fmt(p.was)+'">'+fmt(p.was)+'</s>' : '')+'</span>';
+  }
+  function saleBadge(p){ return SHOW_WAS ? '<span class="sale">-'+p.off+'%</span>' : ''; }
   function ico(n, extra){ return '<svg class="i"'+(extra||'')+'><use href="#'+n+'"/></svg>'; }
   function img(src, alt, lazy){ return '<img src="'+src+'" alt="'+alt+'"'+(lazy?' loading="lazy"':'')+' referrerpolicy="no-referrer">'; }
 
@@ -584,11 +605,11 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     $('#count').textContent = l.length + (l.length===1 ? ' bag' : ' bags') + (filter!=='All' ? ' in ' + filter : '');
     $('#grid').innerHTML = l.length ? l.slice(0, shown).map(function(p){
       return '<article class="card">'+
-        '<div class="tile">'+img(p.imgs[0], p.name, true)+
+        '<div class="tile">'+img(p.imgs[0], p.name, true)+saleBadge(p)+
           '<button class="tile-btn heart'+(wish[p.id]?' on':'')+'" type="button" data-act="wish" data-id="'+p.id+'" aria-pressed="'+(!!wish[p.id])+'" aria-label="Save '+p.name+' to wishlist">'+ico('i-heart')+'</button>'+
           '<button class="tile-btn eye" type="button" data-act="quick" data-id="'+p.id+'" aria-label="Quick view '+p.name+'">'+ico('i-eye')+'</button>'+
         '</div>'+
-        '<div class="card-body"><span class="cat-l">'+p.type+'</span><h3>'+p.name+'</h3><span class="price">'+fmt(p.price)+'</span>'+
+        '<div class="card-body"><span class="cat-l">'+p.type+'</span><h3>'+p.name+'</h3>'+priceHtml(p)+
           '<button class="btn dark" type="button" data-act="add" data-id="'+p.id+'">Add to order</button></div>'+
       '</article>';
     }).join('') : '<div class="empty">No bags match your search.<br><button class="link-btn" type="button" data-act="clear">Clear search and filters</button></div>';
@@ -656,12 +677,15 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     lastFocus = document.activeElement;
     var el = document.getElementById(id);
     el.classList.add('open'); $('#scrim').classList.add('open'); document.body.classList.add('lock');
+    setBackdrop(true);
     var f = el.querySelector('button, a, input'); if (f) setTimeout(function(){ f.focus({preventScroll:true}); }, 60);
   }
+  var BACK = ['.announce','.site-head','main','footer','.wa-float'];
+  function setBackdrop(on){ BACK.forEach(function(q){ var e = document.querySelector(q); if (e){ if (on) e.setAttribute('inert',''); else e.removeAttribute('inert'); } }); }
   function closePanels(keep){
     Array.prototype.forEach.call(document.querySelectorAll('.panel.open'), function(p){ p.classList.remove('open'); });
     if (!keep){
-      $('#scrim').classList.remove('open'); document.body.classList.remove('lock');
+      $('#scrim').classList.remove('open'); document.body.classList.remove('lock'); setBackdrop(false);
       if (lastFocus && lastFocus.focus) { try { lastFocus.focus({preventScroll:true}); } catch(e){} }
     }
   }
@@ -679,8 +703,8 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     var msg = 'Hi bag.Ze, I would like to order the ' + p.name + ' at ' + fmt(p.price) + '.';
     $('#qvBody').innerHTML =
       '<div class="qv-media"><div class="qv-main" id="qvMain">'+img(p.imgs[0], p.name, false)+'</div>'+thumbs+'</div>'+
-      '<div class="qv-info"><span class="eyebrow">'+p.type+'</span><h2>'+p.name+'</h2><span class="price">'+fmt(p.price)+'</span>'+
-      '<p>Pre-orders are open. Add this bag to your order list, or message us directly on WhatsApp.</p>'+
+      '<div class="qv-info"><span class="eyebrow">'+p.type+'</span><h2>'+p.name+'</h2>'+priceHtml(p)+
+      '<p>'+(SHOW_WAS ? 'This is the pre-order price. ' : 'Pre-orders are open. ')+'Add this bag to your order list, or message us directly on WhatsApp.</p>'+
       '<div class="qv-actions">'+
         '<button class="btn primary block" type="button" data-act="add" data-id="'+id+'">Add to order</button>'+
         '<a class="btn wa block" href="'+wa(msg)+'" target="_blank" rel="noopener">'+ico('i-wa')+'Order on WhatsApp</a>'+
@@ -698,7 +722,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   }
   document.addEventListener('error', function(e){
     var t = e.target;
-    if (t && t.tagName === 'IMG' && t.closest('.tile, .th, .qv-main')) t.classList.add('broken');
+    if (t && t.tagName === 'IMG' && t.closest('.tile, .th, .qv-main')){ t.classList.add('broken'); var tl = t.closest('.tile, .qv-main'); if (tl) tl.classList.add('noimg'); }
   }, true);
 
   document.addEventListener('click', function(e){
