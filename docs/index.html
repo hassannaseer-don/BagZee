@@ -216,6 +216,20 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
 .tot span:first-child{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--s500);font-weight:700}
 .tot span:last-child{font-family:var(--serif);font-weight:700;font-size:1.5rem}
 .status{font-size:.82rem;color:var(--b700);min-height:1.2em;text-align:center}
+.pay{border:0;margin:0;padding:0;min-width:0;display:grid;gap:8px}
+.pay legend{padding:0;font-size:.78rem;font-weight:600;color:var(--s600);margin-bottom:2px}
+.pay-opts{display:grid;gap:8px}
+.pay-opt{position:relative;display:flex;align-items:center;gap:12px;min-height:52px;padding:8px 14px;border:1px solid var(--s300);border-radius:14px;background:#fff;cursor:pointer}
+.pay-opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.pay-opt .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--s300);flex:none;display:grid;place-items:center}
+.pay-opt .dot::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--b600);transform:scale(0);transition:transform .15s}
+.pay-opt:has(input:checked){border-color:var(--b600);background:var(--b50)}
+.pay-opt:has(input:checked) .dot{border-color:var(--b600)}
+.pay-opt:has(input:checked) .dot::after{transform:scale(1)}
+.pay-opt:has(input:focus-visible){outline:2px solid var(--b600);outline-offset:2px}
+.pay-opt b{display:block;font-size:.9rem}
+.pay-opt small{display:block;font-size:.74rem;color:var(--s500)}
+.pay-note{font-size:.8rem;color:var(--s600);background:var(--b100);border-radius:12px;padding:10px 12px;margin:0;overflow-wrap:anywhere}
 .menu-list{display:grid;gap:2px;padding:10px 8px}
 .menu-list h4{margin:14px 10px 6px;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--b700)}
 .menu-list button,.menu-list a{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 12px;border:0;border-radius:12px;background:none;text-align:left;font-size:.95rem;font-weight:500;text-decoration:none;color:var(--s800);width:100%}
@@ -366,6 +380,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
         <h4>Help</h4>
         <ul>
           <li><a href="#order-how">How ordering works</a></li>
+          <li style="font-size:.82rem;color:var(--s400);max-width:30ch">Pay by cash on delivery, Easypaisa, JazzCash or bank transfer.</li>
           <li><a id="waFoot" href="https://wa.me/923154676618" target="_blank" rel="noopener">Order on WhatsApp</a></li>
           <li><button class="lnk" type="button" data-act="cart">Your order list</button></li>
         </ul>
@@ -406,6 +421,11 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
       </div>
       <div class="field"><label for="fCity">City</label><input id="fCity" autocomplete="address-level2" placeholder="Lahore"></div>
       <div class="field"><label for="fAddr">Delivery address</label><textarea id="fAddr" autocomplete="street-address" placeholder="House, street, area"></textarea></div>
+      <fieldset class="pay" id="payBox">
+        <legend>Payment method</legend>
+        <div class="pay-opts" id="payOpts"></div>
+        <p class="pay-note" id="payNote"></p>
+      </fieldset>
       <textarea id="summary" readonly hidden></textarea>
     </form>
   </div>
@@ -462,6 +482,17 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   /* Price shown = source price + MARKUP (PKR). */
   var MARKUP = 300;
   var SRC = 'https://atailorson.com/cdn/shop/files/';
+
+  /* Payment methods. Put real account details in 'details' to show them to the customer
+     after they choose that method. Leave 'details' empty and bag.Ze sends them on WhatsApp. */
+  var PAY = [
+    {id:'cod',  label:'Cash on delivery', sub:'Pay the rider when your bag arrives', details:''},
+    {id:'ep',   label:'Easypaisa',        sub:'Send the amount from your Easypaisa app', details:''},
+    {id:'jc',   label:'JazzCash',         sub:'Send the amount from your JazzCash app', details:''},
+    {id:'bank', label:'Bank transfer',    sub:'Transfer to our bank account', details:''}
+  ];
+  var payId = 'cod';
+  function payById(id){ for (var i=0;i<PAY.length;i++){ if (PAY[i].id===id) return PAY[i]; } return PAY[0]; }
 
   /* Crossed-out regular price. Keep this on only if bag.Ze will really charge the regular price after pre-orders end.
      SHOW_WAS = false removes every crossed-out price and discount badge. */
@@ -653,12 +684,23 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     var ids = Object.keys(cart).filter(byId), total = 0;
     var lines = ids.map(function(id){ var p = byId(id), q = cart[id]; total += q*p.price; return '- ' + q + ' × ' + p.name + ' — ' + fmt(q*p.price); });
     var v = function(s){ return ($(s).value || '').trim() || '—'; };
-    var text = 'bag.Ze order\nName: ' + v('#fName') + '\nPhone: ' + v('#fPhone') + '\nCity: ' + v('#fCity') + '\nAddress: ' + v('#fAddr') +
+    var text = 'bag.Ze order\nName: ' + v('#fName') + '\nPhone: ' + v('#fPhone') + '\nCity: ' + v('#fCity') + '\nAddress: ' + v('#fAddr') + '\nPayment: ' + payById(payId).label +
       '\n\nItems:\n' + (lines.length ? lines.join('\n') : '- none yet') + '\n\nTotal: ' + fmt(total);
     $('#summary').value = text;
     $('#waOrder').href = wa(text);
   }
   ['#fName','#fPhone','#fCity','#fAddr'].forEach(function(s){ $(s).addEventListener('input', buildSummary); });
+  function renderPay(){
+    $('#payOpts').innerHTML = PAY.map(function(o){
+      return '<label class="pay-opt"><input type="radio" name="pay" value="'+o.id+'"'+(o.id===payId?' checked':'')+'><span class="dot"></span><span><b>'+o.label+'</b><small>'+o.sub+'</small></span></label>';
+    }).join('');
+    var o = payById(payId);
+    $('#payNote').textContent = o.id === 'cod' ? 'You pay in cash when the order reaches you.' :
+      (o.details ? o.details : 'We send the ' + o.label + ' account details on WhatsApp when we confirm your order. Do not pay before that.');
+  }
+  $('#payOpts').addEventListener('change', function(e){
+    if (e.target && e.target.name === 'pay'){ payId = e.target.value; renderPay(); buildSummary(); }
+  });
   function ready(){
     var st = $('#status');
     if (!Object.keys(cart).filter(byId).length){ st.textContent = 'Add at least one bag first.'; return false; }
@@ -771,7 +813,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   $('#q').addEventListener('input', function(e){ query = e.target.value; shown = PAGE; renderGrid(); });
   $('#sort').addEventListener('change', function(e){ sort = e.target.value; shown = PAGE; renderGrid(); });
 
-  renderGrid(); renderCart(); renderWish();
+  renderPay(); renderGrid(); renderCart(); renderWish();
 })();
 </script>
 </body>
