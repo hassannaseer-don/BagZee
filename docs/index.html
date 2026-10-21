@@ -65,7 +65,7 @@ img{max-width:100%}
 .icon-btn:hover{background:var(--b100)}
 .badge{position:absolute;top:3px;right:1px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--b600);color:#fff;font-size:.66rem;font-weight:700;display:grid;place-items:center}
 .badge[hidden]{display:none}
-.logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;margin-right:auto}
+.logo{display:flex;flex-direction:column;align-items:flex-start;line-height:1;text-decoration:none;margin-right:auto}
 .logo b{font-family:var(--serif);font-size:1.7rem;font-weight:700;letter-spacing:-.01em;color:var(--s900)}
 .logo b span{color:var(--amber)}
 .logo small{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--b700);font-weight:700;margin-top:3px}
@@ -216,6 +216,21 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
 .tot span:first-child{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--s500);font-weight:700}
 .tot span:last-child{font-family:var(--serif);font-weight:700;font-size:1.5rem}
 .status{font-size:.82rem;color:var(--b700);min-height:1.2em;text-align:center}
+.pay-lead{font-size:.95rem;color:var(--s600);max-width:60ch}
+.pay-grid{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:600px){.pay-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1000px){.pay-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.pay-card{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--b200);border-radius:20px;padding:20px;min-width:0}
+.pay-card .pi{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--b50);color:var(--b700);border:1px solid var(--b200)}
+.pay-card h3{font-size:1.02rem;font-weight:700}
+.pay-card p{font-size:.86rem;color:var(--s600);margin:0}
+.pay-det{display:grid;gap:8px;margin:0}
+.pay-det div{background:var(--b50);border-radius:12px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px;min-width:0}
+.pay-det dt{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--s500)}
+.pay-det dd{margin:0;font-weight:600;font-size:.9rem;overflow-wrap:anywhere;text-align:right;user-select:all}
+.pay-card .copy{align-self:flex-start;min-height:40px;padding:0 16px;border:1px solid var(--s300);border-radius:999px;background:#fff;font-size:.8rem;font-weight:600}
+.pay-card .copy:hover{border-color:var(--b600);color:var(--b700)}
+.pay-soon{font-size:.82rem;color:var(--s600);background:var(--b100);border-radius:12px;padding:10px 12px}
 .pay{border:0;margin:0;padding:0;min-width:0;display:grid;gap:8px}
 .pay legend{padding:0;font-size:.78rem;font-weight:600;color:var(--s600);margin-bottom:2px}
 .pay-opts{display:grid;gap:8px}
@@ -282,6 +297,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
       <a href="#collection">Collection</a>
       <a href="#why">Why bag.Ze</a>
       <a href="#order-how">How ordering works</a>
+      <a href="#payment">Payment</a>
     </nav>
     <span class="spacer"></span>
     <button class="icon-btn" type="button" data-act="wishlist" aria-label="Open wishlist"><svg class="i"><use href="#i-heart"/></svg><span class="badge" id="wishBadge" hidden>0</span></button>
@@ -361,6 +377,16 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
       <div class="step"><b>1</b><h3>Pick your bags</h3><p>Tap Add to order on any bag and set the quantities in your order list.</p></div>
       <div class="step"><b>2</b><h3>Add your details</h3><p>Enter your name, phone, city and delivery address.</p></div>
       <div class="step"><b>3</b><h3>Send on WhatsApp</h3><p>Your order opens as a ready message. Press send and we confirm it with you.</p></div>
+    </div>
+  </section>
+  <section class="band section" id="payment" style="scroll-margin-top:64px">
+    <div class="container">
+      <div class="sec-head">
+        <span class="eyebrow">Payment</span>
+        <h2>Pay the way that suits you</h2>
+        <p class="pay-lead">Choose a method when you place your order. We confirm the total and the delivery date with you before you pay.</p>
+      </div>
+      <div class="pay-grid" id="payGrid"></div>
     </div>
   </section>
 </main>
@@ -470,6 +496,8 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   <symbol id="i-pack" viewBox="0 0 24 24"><path d="M9 7V5a3 3 0 0 1 6 0v2"/><rect x="5" y="7" width="14" height="14" rx="4"/><path d="M9 14h6"/></symbol>
   <symbol id="i-duffle" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="11" rx="5"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><path d="M6 13h12"/></symbol>
   <symbol id="i-pouch" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="12" rx="3"/><path d="M3 11h18"/><path d="M12 7V5"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1V10a1 1 0 0 0-1-1H5a2 2 0 0 1-2-2z"/><circle cx="16.5" cy="14.5" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24"><path d="m3 10 9-6 9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18"/></symbol>
   <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z"/><path d="M9 8.2c.3-.5.8-.4 1 0l.7 1.5c.1.3 0 .5-.2.7l-.5.5c.6 1.2 1.5 2 2.7 2.6l.6-.6c.2-.2.5-.2.7-.1l1.5.8c.4.2.4.6.2 1-.5.9-1.5 1.2-2.6.8-2.5-.9-4.2-2.6-5-5-.3-1 0-1.8.9-2.2z" fill="currentColor" stroke="none"/></symbol>
 </svg>
 
@@ -483,13 +511,15 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   var MARKUP = 300;
   var SRC = 'https://atailorson.com/cdn/shop/files/';
 
-  /* Payment methods. Put real account details in 'details' to show them to the customer
-     after they choose that method. Leave 'details' empty and bag.Ze sends them on WhatsApp. */
+  /* Payment methods. Fill 'details' with real account details, for example
+     details:[{k:'Account title', v:'bag.Ze'}, {k:'Number', v:'03XX XXXXXXX'}]
+     They then show in the Payment section and in the order form. Empty details show a
+     "shared when we confirm your order" note instead. */
   var PAY = [
-    {id:'cod',  label:'Cash on delivery', sub:'Pay the rider when your bag arrives', details:''},
-    {id:'ep',   label:'Easypaisa',        sub:'Send the amount from your Easypaisa app', details:''},
-    {id:'jc',   label:'JazzCash',         sub:'Send the amount from your JazzCash app', details:''},
-    {id:'bank', label:'Bank transfer',    sub:'Transfer to our bank account', details:''}
+    {id:'cod',  label:'Cash on delivery', sub:'Pay the rider when your bag arrives', how:'No advance payment. Keep the exact amount ready for the rider.', details:[]},
+    {id:'ep',   label:'Easypaisa',        sub:'Send the amount from your Easypaisa app', how:'Send the order total to our Easypaisa account, then share the payment screenshot with us.', details:[]},
+    {id:'jc',   label:'JazzCash',         sub:'Send the amount from your JazzCash app', how:'Send the order total to our JazzCash account, then share the payment screenshot with us.', details:[]},
+    {id:'bank', label:'Bank transfer',    sub:'Transfer to our bank account', how:'Transfer the order total to our bank account, then share the receipt with us.', details:[]}
   ];
   var payId = 'cod';
   function payById(id){ for (var i=0;i<PAY.length;i++){ if (PAY[i].id===id) return PAY[i]; } return PAY[0]; }
@@ -613,6 +643,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     '<h4>Help</h4>' +
     '<a href="#why" data-act="close">'+ico('i-shield')+'Why bag.Ze</a>' +
     '<a href="#order-how" data-act="close">'+ico('i-arrow')+'How ordering works</a>' +
+    '<a href="#payment" data-act="close">'+ico('i-wallet')+'Payment</a>' +
     '<button type="button" data-act="wishlist">'+ico('i-heart')+'Wishlist</button>' +
     '<button type="button" data-act="cart">'+ico('i-bag')+'Your order</button>';
   function renderChips(){
@@ -690,13 +721,23 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     $('#waOrder').href = wa(text);
   }
   ['#fName','#fPhone','#fCity','#fAddr'].forEach(function(s){ $(s).addEventListener('input', buildSummary); });
+  var PAY_ICON = {cod:'i-pouch', ep:'i-wallet', jc:'i-wallet', bank:'i-bank'};
+  function renderPayGrid(){
+    $('#payGrid').innerHTML = PAY.map(function(o){
+      var det = o.details.length
+        ? '<dl class="pay-det">' + o.details.map(function(d){ return '<div><dt>'+d.k+'</dt><dd>'+d.v+'</dd></div>'; }).join('') + '</dl>' +
+          '<button class="copy" type="button" data-act="paycopy" data-id="'+o.id+'">Copy details</button>'
+        : (o.id === 'cod' ? '' : '<p class="pay-soon">Account details are shared when we confirm your order.</p>');
+      return '<article class="pay-card"><span class="pi">'+ico(PAY_ICON[o.id])+'</span><h3>'+o.label+'</h3><p>'+o.how+'</p>'+det+'</article>';
+    }).join('');
+  }
   function renderPay(){
     $('#payOpts').innerHTML = PAY.map(function(o){
       return '<label class="pay-opt"><input type="radio" name="pay" value="'+o.id+'"'+(o.id===payId?' checked':'')+'><span class="dot"></span><span><b>'+o.label+'</b><small>'+o.sub+'</small></span></label>';
     }).join('');
     var o = payById(payId);
     $('#payNote').textContent = o.id === 'cod' ? 'You pay in cash when the order reaches you.' :
-      (o.details ? o.details : 'We send the ' + o.label + ' account details on WhatsApp when we confirm your order. Do not pay before that.');
+      (o.details.length ? 'Pay to: ' + o.details.map(function(d){ return d.k + ' ' + d.v; }).join(' · ') : 'We send the ' + o.label + ' account details when we confirm your order. Do not pay before that.');
   }
   $('#payOpts').addEventListener('change', function(e){
     if (e.target && e.target.name === 'pay'){ payId = e.target.value; renderPay(); buildSummary(); }
@@ -802,6 +843,12 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
       Array.prototype.forEach.call(b.parentNode.children, function(x){ x.setAttribute('aria-pressed', x === b); });
       return;
     }
+    if (act === 'paycopy'){
+      var o = payById(id), txt = o.label + '\n' + o.details.map(function(d){ return d.k + ': ' + d.v; }).join('\n');
+      try { navigator.clipboard.writeText(txt).then(function(){ toast(o.label + ' details copied'); }, function(){ toast('Select the details and copy them'); }); }
+      catch(err){ toast('Select the details and copy them'); }
+      return;
+    }
     if (act === 'copy'){
       if (!ready()) return;
       var st = $('#status');
@@ -813,7 +860,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   $('#q').addEventListener('input', function(e){ query = e.target.value; shown = PAGE; renderGrid(); });
   $('#sort').addEventListener('change', function(e){ sort = e.target.value; shown = PAGE; renderGrid(); });
 
-  renderPay(); renderGrid(); renderCart(); renderWish();
+  renderPay(); renderPayGrid(); renderGrid(); renderCart(); renderWish();
 })();
 </script>
 </body>
