@@ -218,8 +218,16 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
 .status{font-size:.82rem;color:var(--b700);min-height:1.2em;text-align:center}
 .pay-lead{font-size:.95rem;color:var(--s600);max-width:60ch}
 .pay-grid{display:grid;gap:14px;grid-template-columns:1fr}
-@media (min-width:600px){.pay-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (min-width:1000px){.pay-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.pay-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.pay-adv{font-size:.82rem;font-weight:600;color:var(--b800);background:var(--b100);border-radius:12px;padding:10px 12px;margin:0}
+.due{display:grid;gap:4px;font-size:.88rem}
+.due div{display:flex;justify-content:space-between;gap:10px}
+.due div:first-child b{color:var(--b800)}
+.due b{font-family:var(--serif);font-size:1.05rem}
+.sel{width:100%;min-height:48px;padding:0 12px;border:1px solid var(--s300);border-radius:12px;background:#fff;font-size:1rem}
+.proof input[type=file]{width:100%;padding:10px;border:1px dashed var(--b300);border-radius:12px;background:#fff;font-size:.9rem}
+.proof img{width:100%;max-height:260px;object-fit:contain;border-radius:12px;border:1px solid var(--s200);background:#fff}
+.proof small{font-size:.76rem;color:var(--s500)}
 .pay-card{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--b200);border-radius:20px;padding:20px;min-width:0}
 .pay-card .pi{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--b50);color:var(--b700);border:1px solid var(--b200)}
 .pay-card h3{font-size:1.02rem;font-weight:700}
@@ -406,7 +414,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
         <h4>Help</h4>
         <ul>
           <li><a href="#order-how">How ordering works</a></li>
-          <li style="font-size:.82rem;color:var(--s400);max-width:30ch">Pay by cash on delivery, Easypaisa, JazzCash or bank transfer.</li>
+          <li style="font-size:.82rem;color:var(--s400);max-width:30ch">Pay by Easypaisa, JazzCash, NayaPay or bank transfer. Cash on delivery needs a 25% advance.</li>
           <li><a id="waFoot" href="https://wa.me/923154676618" target="_blank" rel="noopener">Order on WhatsApp</a></li>
           <li><button class="lnk" type="button" data-act="cart">Your order list</button></li>
         </ul>
@@ -451,7 +459,16 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
         <legend>Payment method</legend>
         <div class="pay-opts" id="payOpts"></div>
         <p class="pay-note" id="payNote"></p>
+        <div class="due" id="dueBox"></div>
+        <div class="field" id="advBox" hidden><label for="advVia">Pay the 25% advance with</label><select id="advVia" class="sel"></select></div>
       </fieldset>
+      <div class="field proof">
+        <label for="fProof">Payment screenshot</label>
+        <input id="fProof" type="file" accept="image/*">
+        <img id="proofPrev" alt="Preview of your payment screenshot" hidden>
+        <button class="link-btn" type="button" id="proofRm" hidden>Remove screenshot</button>
+        <small id="proofHelp"></small>
+      </div>
       <textarea id="summary" readonly hidden></textarea>
     </form>
   </div>
@@ -511,16 +528,23 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   var MARKUP = 300;
   var SRC = 'https://atailorson.com/cdn/shop/files/';
 
-  /* Payment methods. Fill 'details' with real account details, for example
+  /* Payment methods. Fill 'details' with the real account details, for example
      details:[{k:'Account title', v:'bag.Ze'}, {k:'Number', v:'03XX XXXXXXX'}]
-     They then show in the Payment section and in the order form. Empty details show a
+     They then show in the Payment section and the order form. Empty details show a
      "shared when we confirm your order" note instead. */
   var PAY = [
-    {id:'cod',  label:'Cash on delivery', sub:'Pay the rider when your bag arrives', how:'No advance payment. Keep the exact amount ready for the rider.', details:[]},
-    {id:'ep',   label:'Easypaisa',        sub:'Send the amount from your Easypaisa app', how:'Send the order total to our Easypaisa account, then share the payment screenshot with us.', details:[]},
-    {id:'jc',   label:'JazzCash',         sub:'Send the amount from your JazzCash app', how:'Send the order total to our JazzCash account, then share the payment screenshot with us.', details:[]},
-    {id:'bank', label:'Bank transfer',    sub:'Transfer to our bank account', how:'Transfer the order total to our bank account, then share the receipt with us.', details:[]}
+    {id:'cod',  label:'Cash on delivery', sub:'25% advance now, the rest to the rider', how:'Pay 25% advance by Easypaisa, JazzCash, NayaPay or bank transfer and add the payment screenshot. Your order is confirmed once the advance is received. Pay the remaining 75% in cash to the rider.', details:[]},
+    {id:'ep',   label:'Easypaisa',        sub:'Send the amount from your Easypaisa app', how:'Send the order total to our Easypaisa account, then add the payment screenshot to your order.', details:[]},
+    {id:'jc',   label:'JazzCash',         sub:'Send the amount from your JazzCash app', how:'Send the order total to our JazzCash account, then add the payment screenshot to your order.', details:[]},
+    {id:'np',   label:'NayaPay',          sub:'Send the amount from your NayaPay app', how:'Send the order total to our NayaPay account, then add the payment screenshot to your order.', details:[]},
+    {id:'bank', label:'Bank transfer',    sub:'Transfer to our bank account', how:'Transfer the order total to our bank account, then add the transfer receipt to your order.', details:[]}
   ];
+  var ADVANCE_PCT = 25;   /* advance for cash on delivery */
+
+  /* Where the order and payment screenshot are sent. Paste the web app URL of the Google Apps Script
+     from setup/payment-proof.gs here. While this is empty, the page cannot upload the screenshot, so it
+     asks the customer to attach it in the WhatsApp chat instead. */
+  var PROOF_ENDPOINT = '';
   var payId = 'cod';
   function payById(id){ for (var i=0;i<PAY.length;i++){ if (PAY[i].id===id) return PAY[i]; } return PAY[0]; }
 
@@ -711,23 +735,42 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     $('#wishEmpty').hidden = ids.length > 0;
     var b = $('#wishBadge'); b.textContent = ids.length; b.hidden = ids.length === 0;
   }
+  function cartTotal(){ var t = 0; Object.keys(cart).filter(byId).forEach(function(id){ t += cart[id]*byId(id).price; }); return t; }
+  function dueNow(){ var t = cartTotal(); return payId === 'cod' ? Math.ceil(t * ADVANCE_PCT / 100) : t; }
+  function renderDue(){
+    var t = cartTotal(), now = dueNow();
+    $('#dueBox').innerHTML = payId === 'cod'
+      ? '<div><span>Pay now ('+ADVANCE_PCT+'% advance)</span><b>'+fmt(now)+'</b></div><div><span>Pay the rider on delivery</span><b>'+fmt(t - now)+'</b></div>'
+      : '<div><span>Pay now</span><b>'+fmt(now)+'</b></div>';
+    $('#advBox').hidden = payId !== 'cod';
+    $('#proofHelp').textContent = PROOF_ENDPOINT
+      ? 'Add the screenshot after you pay. It is sent to bag.Ze with your order.'
+      : 'Add the screenshot after you pay. When WhatsApp opens, attach the same screenshot in the chat.';
+  }
+  var proofData = '';
   function buildSummary(){
-    var ids = Object.keys(cart).filter(byId), total = 0;
-    var lines = ids.map(function(id){ var p = byId(id), q = cart[id]; total += q*p.price; return '- ' + q + ' × ' + p.name + ' — ' + fmt(q*p.price); });
+    var ids = Object.keys(cart).filter(byId), total = cartTotal();
+    var lines = ids.map(function(id){ var p = byId(id), q = cart[id]; return '- ' + q + ' × ' + p.name + ' — ' + fmt(q*p.price); });
     var v = function(s){ return ($(s).value || '').trim() || '—'; };
-    var text = 'bag.Ze order\nName: ' + v('#fName') + '\nPhone: ' + v('#fPhone') + '\nCity: ' + v('#fCity') + '\nAddress: ' + v('#fAddr') + '\nPayment: ' + payById(payId).label +
+    var now = dueNow(), pay = payById(payId);
+    var payLines = '\nPayment: ' + pay.label;
+    if (payId === 'cod') payLines += '\nAdvance (' + ADVANCE_PCT + '%): ' + fmt(now) + ' via ' + payById($('#advVia').value || 'ep').label + '\nBalance on delivery: ' + fmt(total - now);
+    else payLines += '\nPaid or to pay now: ' + fmt(now);
+    payLines += '\nPayment screenshot: ' + (proofData ? (PROOF_ENDPOINT ? 'uploaded with this order' : 'I will attach it in this chat') : 'not added yet');
+    var text = 'bag.Ze order\nName: ' + v('#fName') + '\nPhone: ' + v('#fPhone') + '\nCity: ' + v('#fCity') + '\nAddress: ' + v('#fAddr') + payLines +
       '\n\nItems:\n' + (lines.length ? lines.join('\n') : '- none yet') + '\n\nTotal: ' + fmt(total);
     $('#summary').value = text;
     $('#waOrder').href = wa(text);
+    renderDue();
   }
   ['#fName','#fPhone','#fCity','#fAddr'].forEach(function(s){ $(s).addEventListener('input', buildSummary); });
-  var PAY_ICON = {cod:'i-pouch', ep:'i-wallet', jc:'i-wallet', bank:'i-bank'};
+  var PAY_ICON = {cod:'i-pouch', ep:'i-wallet', jc:'i-wallet', np:'i-wallet', bank:'i-bank'};
   function renderPayGrid(){
     $('#payGrid').innerHTML = PAY.map(function(o){
       var det = o.details.length
         ? '<dl class="pay-det">' + o.details.map(function(d){ return '<div><dt>'+d.k+'</dt><dd>'+d.v+'</dd></div>'; }).join('') + '</dl>' +
           '<button class="copy" type="button" data-act="paycopy" data-id="'+o.id+'">Copy details</button>'
-        : (o.id === 'cod' ? '' : '<p class="pay-soon">Account details are shared when we confirm your order.</p>');
+        : (o.id === 'cod' ? '<p class="pay-adv">'+ADVANCE_PCT+'% advance required to confirm</p>' : '<p class="pay-soon">Account details are shared when we confirm your order.</p>');
       return '<article class="pay-card"><span class="pi">'+ico(PAY_ICON[o.id])+'</span><h3>'+o.label+'</h3><p>'+o.how+'</p>'+det+'</article>';
     }).join('');
   }
@@ -736,12 +779,46 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
       return '<label class="pay-opt"><input type="radio" name="pay" value="'+o.id+'"'+(o.id===payId?' checked':'')+'><span class="dot"></span><span><b>'+o.label+'</b><small>'+o.sub+'</small></span></label>';
     }).join('');
     var o = payById(payId);
-    $('#payNote').textContent = o.id === 'cod' ? 'You pay in cash when the order reaches you.' :
+    var sel = $('#advVia'), keep = sel.value;
+    sel.innerHTML = PAY.filter(function(x){ return x.id !== 'cod'; }).map(function(x){ return '<option value="'+x.id+'">'+x.label+'</option>'; }).join('');
+    if (keep) sel.value = keep;
+    $('#payNote').textContent = o.id === 'cod' ? 'Pay a ' + ADVANCE_PCT + '% advance first. Your order is confirmed once we receive it. Pay the rest in cash to the rider.' :
       (o.details.length ? 'Pay to: ' + o.details.map(function(d){ return d.k + ' ' + d.v; }).join(' · ') : 'We send the ' + o.label + ' account details when we confirm your order. Do not pay before that.');
   }
   $('#payOpts').addEventListener('change', function(e){
     if (e.target && e.target.name === 'pay'){ payId = e.target.value; renderPay(); buildSummary(); }
   });
+  $('#advVia').addEventListener('change', buildSummary);
+  function clearProof(){ proofData = ''; $('#fProof').value = ''; $('#proofPrev').hidden = true; $('#proofPrev').removeAttribute('src'); $('#proofRm').hidden = true; buildSummary(); }
+  $('#proofRm').addEventListener('click', clearProof);
+  $('#fProof').addEventListener('change', function(e){
+    var f = e.target.files && e.target.files[0], st = $('#status');
+    if (!f) { clearProof(); return; }
+    if (!/^image\//.test(f.type)) { st.textContent = 'Choose an image file (a screenshot or photo).'; clearProof(); return; }
+    var fr = new FileReader();
+    fr.onload = function(){
+      var im = new Image();
+      im.onload = function(){
+        var sc = Math.min(1, 1280 / Math.max(im.width, im.height)), c = document.createElement('canvas');
+        c.width = Math.round(im.width * sc); c.height = Math.round(im.height * sc);
+        var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(im, 0, 0, c.width, c.height);
+        proofData = c.toDataURL('image/jpeg', 0.72);
+        var pv = $('#proofPrev'); pv.src = proofData; pv.hidden = false; $('#proofRm').hidden = false;
+        st.textContent = 'Screenshot added.'; buildSummary();
+      };
+      im.onerror = function(){ st.textContent = 'This image could not be read. Try another screenshot.'; clearProof(); };
+      im.src = fr.result;
+    };
+    fr.readAsDataURL(f);
+  });
+  function sendProof(){
+    if (!PROOF_ENDPOINT) return Promise.resolve(false);
+    var ids = Object.keys(cart).filter(byId), total = cartTotal(), now = dueNow();
+    var body = { name:$('#fName').value.trim(), phone:$('#fPhone').value.trim(), city:$('#fCity').value.trim(), address:$('#fAddr').value.trim(),
+      payment:payById(payId).label, advanceVia: payId === 'cod' ? payById($('#advVia').value).label : '', total:total, dueNow:now,
+      items: ids.map(function(id){ return cart[id] + ' x ' + byId(id).name; }).join(', '), screenshot:proofData };
+    return fetch(PROOF_ENDPOINT, { method:'POST', mode:'no-cors', body:JSON.stringify(body) }).then(function(){ return true; }, function(){ return false; });
+  }
   function ready(){
     var st = $('#status');
     if (!Object.keys(cart).filter(byId).length){ st.textContent = 'Add at least one bag first.'; return false; }
@@ -750,7 +827,12 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   }
   $('#waOrder').addEventListener('click', function(e){
     if (!ready()){ e.preventDefault(); return; }
-    $('#status').textContent = 'WhatsApp opened with your order. Press send there to place it.';
+    var st = $('#status');
+    st.textContent = 'WhatsApp opened with your order. Press send there to place it.' + (proofData && !PROOF_ENDPOINT ? ' Attach your payment screenshot in the chat.' : '');
+    if (proofData && PROOF_ENDPOINT){
+      st.textContent = 'Sending your screenshot...';
+      sendProof().then(function(ok){ st.textContent = ok ? 'Order and screenshot sent. Press send in WhatsApp to finish.' : 'The screenshot could not be sent. Attach it in the WhatsApp chat.'; });
+    }
   });
 
   /* panels */
