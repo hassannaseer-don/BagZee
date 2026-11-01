@@ -1,0 +1,49 @@
+<footer class="site-foot">
+  <div class="container">
+    <div class="foot">
+      <div>
+        <a class="logo" href="{{ routes.root_url }}" aria-label="Back to home">
+          <b>{{ settings.logo_main }}<span>{{ settings.logo_accent }}</span></b>
+          {%- if settings.logo_tagline != blank -%}<small>{{ settings.logo_tagline }}</small>{%- endif -%}
+        </a>
+        <p class="blurb">{{ section.settings.blurb }}</p>
+      </div>
+      <div>
+        <h4>{{ section.settings.shop_heading }}</h4>
+        <ul>
+          {%- for link in linklists[section.settings.shop_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          {%- for link in linklists[section.settings.help_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+          {%- if section.settings.payment_line != blank -%}<li class="pay-line">{{ section.settings.payment_line }}</li>{%- endif -%}
+        </ul>
+        <h4 class="contact-h">Contact</h4>
+        <ul>
+          {%- if settings.contact_email != blank -%}<li><a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a></li>{%- endif -%}
+          {%- if settings.contact_phone != blank -%}<li><a href="tel:{{ settings.contact_phone | remove: ' ' }}">{{ settings.contact_phone }}</a></li>{%- endif -%}
+        </ul>
+      </div>
+    </div>
+    <p class="legal">© {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "textarea", "id": "blurb", "label": "About text", "default": "Handcrafted bags and leather goods for everyday life. Pre-orders are open now." },
+    { "type": "text", "id": "shop_heading", "label": "Shop column heading", "default": "Shop" },
+    { "type": "link_list", "id": "shop_menu", "label": "Shop menu", "default": "main-menu" },
+    { "type": "link_list", "id": "help_menu", "label": "Help menu", "default": "footer" },
+    { "type": "text", "id": "payment_line", "label": "Payment line", "default": "Pay by Easypaisa, JazzCash, NayaPay or bank transfer. Cash on delivery needs a 25% advance." }
+  ]
+}
+{% endschema %}

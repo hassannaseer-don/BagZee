@@ -1,0 +1,40 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "bag.Ze",
+    "theme_version": "1.0.0",
+    "theme_author": "bag.Ze",
+    "theme_documentation_url": "https://github.com/hassannaseer-don/BagZee",
+    "theme_support_url": "https://github.com/hassannaseer-don/BagZee/issues"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      { "type": "text", "id": "logo_main", "label": "Logo text", "default": "bag" },
+      { "type": "text", "id": "logo_accent", "label": "Logo accent (shown in colour)", "default": ".Ze" },
+      { "type": "text", "id": "logo_tagline", "label": "Line under the logo", "default": "Atelier Leather" }
+    ]
+  },
+  {
+    "name": "Brand images",
+    "settings": [
+      { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "Square PNG, at least 48 x 48 px" },
+      { "type": "image_picker", "id": "share_image", "label": "Image for link previews", "info": "1200 x 630 px works best" }
+    ]
+  },
+  {
+    "name": "Contact and WhatsApp",
+    "settings": [
+      { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number", "info": "Digits only, with country code. Example: 923154676618", "default": "923154676618" },
+      { "type": "text", "id": "contact_phone", "label": "Phone number", "default": "0315 4676618" },
+      { "type": "text", "id": "contact_email", "label": "Contact email", "default": "hassannaseer533@gmail.com" }
+    ]
+  },
+  {
+    "name": "Payment",
+    "settings": [
+      { "type": "range", "id": "advance_pct", "min": 0, "max": 100, "step": 5, "unit": "%", "label": "Advance for cash on delivery", "info": "Shown in the cart and on product pages. Shopify cannot collect the advance by itself, see the setup guide.", "default": 25 },
+      { "type": "text", "id": "proof_endpoint", "label": "Payment screenshot receiver (web app URL)", "info": "Paste the Google Apps Script web app URL from setup/README.md. While empty, customers send the screenshot on WhatsApp." }
+    ]
+  }
+]

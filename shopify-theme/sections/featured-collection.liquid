@@ -1,0 +1,31 @@
+<section class="section container" id="collection">
+  <div class="sec-head">
+    {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    <h2>{{ section.settings.heading }}</h2>
+  </div>
+  {%- assign list = section.settings.collection -%}
+  {%- if list == blank -%}{%- assign list = collections['all'] -%}{%- endif -%}
+  <div class="grid">
+    {%- for product in list.products limit: section.settings.products_to_show -%}
+      {% render 'product-card', product: product %}
+    {%- else -%}
+      <p class="empty">Add products to this collection in Shopify admin and they appear here.</p>
+    {%- endfor -%}
+  </div>
+  {%- if list.products_count > section.settings.products_to_show -%}
+    <div class="more-row"><a class="btn line" href="{{ list.url }}">{{ 'general.view_all' | t }} ({{ list.products_count }})</a></div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Product grid",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small heading", "default": "The collection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop handcrafted bags" },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Leave empty to show all products." },
+    { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 4, "max": 24, "step": 4, "default": 12 }
+  ],
+  "presets": [{ "name": "Product grid" }]
+}
+{% endschema %}

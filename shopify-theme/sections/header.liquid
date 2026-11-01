@@ -1,0 +1,41 @@
+<header class="site-head">
+  <div class="container head-in">
+    <button class="icon-btn only-mobile" type="button" data-menu-open aria-label="Open menu" aria-controls="menu-drawer" aria-expanded="false">{% render 'icon', name: 'menu' %}</button>
+    <a class="logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
+      <b>{{ settings.logo_main }}<span>{{ settings.logo_accent }}</span></b>
+      {%- if settings.logo_tagline != blank -%}<small>{{ settings.logo_tagline }}</small>{%- endif -%}
+    </a>
+    <nav class="nav" aria-label="Main">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+    <span class="spacer"></span>
+    <a class="icon-btn" href="{{ routes.search_url }}" aria-label="Search">{% render 'icon', name: 'search' %}</a>
+    <a class="icon-btn" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items">
+      {% render 'icon', name: 'bag' %}
+      {%- if cart.item_count > 0 -%}<span class="badge">{{ cart.item_count }}</span>{%- endif -%}
+    </a>
+  </div>
+</header>
+
+<div class="scrim" data-scrim hidden></div>
+<aside class="drawer" id="menu-drawer" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="dr-head"><h2>Menu</h2><button class="icon-btn" type="button" data-menu-close aria-label="Close menu">{% render 'icon', name: 'x' %}</button></div>
+  <nav class="menu-list" aria-label="Mobile">
+    {%- for link in linklists[section.settings.menu].links -%}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {%- endfor -%}
+    <a href="{{ routes.search_url }}">Search</a>
+    <a href="{{ routes.cart_url }}">Cart</a>
+  </nav>
+</aside>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

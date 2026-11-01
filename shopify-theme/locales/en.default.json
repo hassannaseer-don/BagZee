@@ -1,0 +1,77 @@
+{
+  "general": {
+    "skip_to_content": "Skip to content",
+    "tagged": "tagged {{ tags }}",
+    "page": "Page {{ page }}",
+    "menu": "Menu",
+    "close": "Close",
+    "search": "Search",
+    "search_placeholder": "Search bags, duffles...",
+    "view_all": "View all",
+    "password": "Password",
+    "enter": "Enter",
+    "password_message": "This store is not open yet. Enter the password to look around.",
+    "home": "Home"
+  },
+  "cart": {
+    "title": "Your cart",
+    "added": "added to your cart",
+    "error": "Could not update your cart. Please try again.",
+    "empty": "Your cart is empty.",
+    "empty_link": "Continue shopping",
+    "remove": "Remove",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "checkout": "Check out",
+    "note": "Order note",
+    "taxes_note": "Taxes and shipping are calculated at checkout.",
+    "pay_now": "Pay now ({{ percent }}% advance)",
+    "pay_rider": "Pay the rider on delivery",
+    "advance_info": "For cash on delivery, pay a {{ percent }}% advance first. Your order is confirmed once the advance is received.",
+    "order_whatsapp": "Order on WhatsApp",
+    "whatsapp_intro": "Hi, I would like to order:",
+    "update": "Update cart"
+  },
+  "products": {
+    "add_to_cart": "Add to cart",
+    "choose_options": "Choose options",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "quantity": "Quantity",
+    "order_whatsapp": "Order on WhatsApp",
+    "sale": "Sale",
+    "from_price": "From {{ price }}",
+    "no_products": "No products found.",
+    "sort_by": "Sort by",
+    "sort_featured": "Featured",
+    "sort_price_asc": "Price, low to high",
+    "sort_price_desc": "Price, high to low",
+    "sort_title_asc": "Name, A to Z",
+    "sort_created": "Newest",
+    "results_count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    }
+  },
+  "payments": {
+    "copy": "Copy details",
+    "copied": "Details copied",
+    "pending": "Account details are shared when we confirm your order."
+  },
+  "search": {
+    "title": "Search",
+    "results": "Search results for \"{{ terms }}\"",
+    "none": "No results for \"{{ terms }}\". Check the spelling or try another word."
+  },
+  "errors": {
+    "title": "Page not found",
+    "text": "The page you are looking for does not exist.",
+    "back": "Back to the shop"
+  },
+  "footer": {
+    "contact": "Contact",
+    "shop": "Shop",
+    "help": "Help",
+    "rights": "All rights reserved."
+  }
+}

@@ -1,0 +1,30 @@
+<section class="section container">
+  <div class="sec-head">
+    <span class="eyebrow">Collections</span>
+    <h1 class="page-h">{{ page_title }}</h1>
+  </div>
+  <div class="grid">
+    {%- for collection in collections -%}
+      {%- unless collection.handle == 'frontpage' -%}
+        <article class="card">
+          <a class="tile" href="{{ collection.url }}" aria-label="{{ collection.title | escape }}">
+            {%- if collection.featured_image != blank -%}
+              {{ collection.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 1024px) 25vw, 50vw', alt: collection.featured_image.alt | default: collection.title }}
+            {%- endif -%}
+          </a>
+          <div class="card-body">
+            <h3><a href="{{ collection.url }}">{{ collection.title }}</a></h3>
+            <span class="cat-l">{{ collection.products_count }} products</span>
+          </div>
+        </article>
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection list",
+  "settings": []
+}
+{% endschema %}

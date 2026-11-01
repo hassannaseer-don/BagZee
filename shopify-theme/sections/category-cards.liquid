@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="cats">
+    {%- for block in section.blocks -%}
+      {%- assign c = block.settings.collection -%}
+      {%- if c != blank -%}
+        <a class="cat" href="{{ c.url }}" {{ block.shopify_attributes }}>
+          <span class="ci">{% render 'icon', name: block.settings.icon %}</span>
+          <span><h3>{{ block.settings.title | default: c.title }}</h3><p>{{ c.products_count }} styles</p></span>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Category cards",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "title", "label": "Title (optional)" },
+        {
+          "type": "select", "id": "icon", "label": "Icon", "default": "handbag",
+          "options": [
+            { "value": "handbag", "label": "Handbag" },
+            { "value": "cross", "label": "Crossbody" },
+            { "value": "pack", "label": "Backpack" },
+            { "value": "duffle", "label": "Duffle" },
+            { "value": "pouch", "label": "Pouch" },
+            { "value": "layers", "label": "All" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Category cards", "blocks": [{ "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }] }]
+}
+{% endschema %}

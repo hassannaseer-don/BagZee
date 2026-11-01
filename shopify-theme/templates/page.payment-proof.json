@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "proof": {
+      "type": "payment-proof",
+      "settings": {}
+    }
+  },
+  "order": [
+    "proof"
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "pill_1": "Handcrafted bags",
+        "pill_2": "Pre-orders open",
+        "heading": "Elegance You Carry.",
+        "heading_accent": "Crafted by bag.Ze",
+        "text": "Totes, crossbody bags, backpacks, duffles and pouches made for everyday life. Choose yours and order in a few taps.",
+        "button_label": "Explore Collection"
+      }
+    },
+    "categories": {
+      "type": "category-cards",
+      "blocks": {
+        "c1": {
+          "type": "category",
+          "settings": {
+            "collection": "handbags",
+            "title": "Handbags",
+            "icon": "handbag"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "collection": "crossbody",
+            "title": "Crossbody",
+            "icon": "cross"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "collection": "backpacks",
+            "title": "Backpacks",
+            "icon": "pack"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "collection": "duffles",
+            "title": "Duffles",
+            "icon": "duffle"
+          }
+        },
+        "c5": {
+          "type": "category",
+          "settings": {
+            "collection": "pouches",
+            "title": "Pouches",
+            "icon": "pouch"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "settings": {}
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "The collection",
+        "heading": "Shop handcrafted bags",
+        "collection": "all",
+        "products_to_show": 12
+      }
+    },
+    "why": {
+      "type": "features",
+      "settings": {
+        "eyebrow": "Why bag.Ze",
+        "heading": "Made to carry every day"
+      },
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "wa",
+            "title": "Order in a few taps",
+            "text": "Add bags to your cart, pay your way and we confirm your order with you."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "layers",
+            "title": "Five categories",
+            "text": "Handbags, crossbody bags, backpacks, duffles and pouches in one place."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Built for daily use",
+            "text": "Strap anchors and handle bases are reinforced where bags usually fail."
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "icon": "pen",
+            "title": "Custom requests",
+            "text": "Want a monogram or a different colour? Ask us before you order."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ]
+    },
+    "steps": {
+      "type": "steps",
+      "settings": {
+        "eyebrow": "How ordering works",
+        "heading": "Three steps to your bag"
+      },
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Pick your bags",
+            "text": "Add bags to your cart and set the quantities."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Check out",
+            "text": "Enter your name, phone, city and delivery address."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Pay and confirm",
+            "text": "Pay with Easypaisa, JazzCash, NayaPay or bank transfer, or pay a 25% advance for cash on delivery. We confirm your order once we receive it."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "payments": {
+      "type": "payment-methods",
+      "settings": {
+        "eyebrow": "Payment",
+        "heading": "Pay the way that suits you",
+        "text": "Choose a method at checkout. We confirm the total and the delivery date with you before you pay."
+      },
+      "blocks": {
+        "p1": {
+          "type": "method",
+          "settings": {
+            "icon": "pouch",
+            "title": "Cash on delivery",
+            "text": "Pay a 25% advance by Easypaisa, JazzCash, NayaPay or bank transfer and send the payment screenshot. Your order is confirmed once the advance is received. Pay the remaining 75% in cash to the rider.",
+            "advance": true
+          }
+        },
+        "p2": {
+          "type": "method",
+          "settings": {
+            "icon": "wallet",
+            "title": "Easypaisa",
+            "text": "Send the order total to our Easypaisa account, then send the payment screenshot.",
+            "advance": false
+          }
+        },
+        "p3": {
+          "type": "method",
+          "settings": {
+            "icon": "wallet",
+            "title": "JazzCash",
+            "text": "Send the order total to our JazzCash account, then send the payment screenshot.",
+            "advance": false
+          }
+        },
+        "p4": {
+          "type": "method",
+          "settings": {
+            "icon": "wallet",
+            "title": "NayaPay",
+            "text": "Send the order total to our NayaPay account, then send the payment screenshot.",
+            "advance": false
+          }
+        },
+        "p5": {
+          "type": "method",
+          "settings": {
+            "icon": "bank",
+            "title": "Bank transfer",
+            "text": "Transfer the order total to our bank account, then send the transfer receipt.",
+            "advance": false
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "categories",
+    "featured",
+    "why",
+    "steps",
+    "payments"
+  ]
+}

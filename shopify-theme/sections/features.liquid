@@ -1,0 +1,45 @@
+<section class="band section">
+  <div class="container">
+    <div class="sec-head" style="text-align:center;align-items:center">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="feats">
+      {%- for block in section.blocks -%}
+        <div class="feat" {{ block.shopify_attributes }}>
+          <div class="fi">{% render 'icon', name: block.settings.icon %}</div>
+          <div><h3>{{ block.settings.title }}</h3><p>{{ block.settings.text }}</p></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Features",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small heading", "default": "Why bag.Ze" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Made to carry every day" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "shield",
+          "options": [
+            { "value": "wa", "label": "WhatsApp" },
+            { "value": "layers", "label": "Layers" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "pen", "label": "Pen" },
+            { "value": "wallet", "label": "Wallet" }
+          ] },
+        { "type": "text", "id": "title", "label": "Title", "default": "Built for daily use" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Strap anchors and handle bases are reinforced where bags usually fail." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Features" }]
+}
+{% endschema %}

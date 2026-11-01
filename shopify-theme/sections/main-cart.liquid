@@ -1,0 +1,69 @@
+<section class="section container cart-page">
+  <div class="sec-head">
+    <span class="eyebrow">Your order</span>
+    <h1 class="page-h">Cart</h1>
+  </div>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="empty-cart">
+      <p>Your cart is empty.</p>
+      <a class="btn primary" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+    </div>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post" id="cart-form" class="cart-grid">
+      <div class="cart-items">
+        {%- for item in cart.items -%}
+          <div class="cart-row">
+            <a class="cart-img" href="{{ item.url }}">
+              {%- if item.image != blank -%}{{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: item.image.alt | default: item.product.title }}{%- endif -%}
+            </a>
+            <div class="cart-info">
+              <a class="nm" href="{{ item.url }}">{{ item.product.title }}</a>
+              {%- unless item.product.has_only_default_variant -%}<div class="sub">{{ item.variant.title }}</div>{%- endunless -%}
+              <div class="pr">{{ item.final_price | money }}</div>
+              <div class="cart-act">
+                <label class="visually-hidden" for="qty-{{ item.index }}">Quantity for {{ item.product.title | escape }}</label>
+                <input class="qty-input" id="qty-{{ item.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" max="20" inputmode="numeric">
+                <a class="link-btn" href="{{ routes.cart_change_url }}?line={{ item.index | plus: 1 }}&quantity=0">Remove</a>
+              </div>
+            </div>
+            <div class="cart-line">{{ item.final_line_price | money }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <aside class="cart-sum">
+        <div class="tot"><span>Total</span><span>{{ cart.total_price | money }}</span></div>
+        <p class="tax-note">Shipping and taxes are calculated at checkout.</p>
+
+        {%- assign advance = cart.total_price | times: settings.advance_pct | divided_by: 100.0 | ceil -%}
+        <div class="due">
+          <div><span>Cash on delivery: pay now ({{ settings.advance_pct }}% advance)</span><b>{{ advance | money }}</b></div>
+          <div><span>Pay the rider on delivery</span><b>{{ cart.total_price | minus: advance | money }}</b></div>
+        </div>
+        <p class="pay-note">Choose your payment method at checkout. For Easypaisa, JazzCash, NayaPay or bank transfer, you receive the account details after you place the order. Then send your <a href="{{ pages['payment-proof'].url | default: '#' }}">payment screenshot</a>.</p>
+
+        <div class="field">
+          <label for="cart-note">Order note</label>
+          <textarea id="cart-note" name="note" placeholder="Anything we should know about your order">{{ cart.note }}</textarea>
+        </div>
+
+        <button class="btn primary block" type="submit" name="checkout">Check out</button>
+        <button class="btn line block" type="submit" name="update">Update cart</button>
+
+        {%- capture wa_text -%}{{ shop.name }} order
+{% for item in cart.items %}- {{ item.quantity }} x {{ item.product.title }}{% unless item.product.has_only_default_variant %} ({{ item.variant.title }}){% endunless %} - {{ item.final_line_price | money }}
+{% endfor %}
+Total: {{ cart.total_price | money }}{%- endcapture -%}
+        <a class="btn wa block" href="https://wa.me/{{ settings.whatsapp_number }}?text={{ wa_text | url_encode }}" target="_blank" rel="noopener">{% render 'icon', name: 'wa' %}Send cart on WhatsApp</a>
+      </aside>
+    </form>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": []
+}
+{% endschema %}

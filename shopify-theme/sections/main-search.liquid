@@ -1,0 +1,40 @@
+<section class="section container">
+  <div class="sec-head">
+    <span class="eyebrow">Search</span>
+    <h1 class="page-h">{% if search.performed %}Results for “{{ search.terms | escape }}”{% else %}Search{% endif %}</h1>
+  </div>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+    <label class="visually-hidden" for="q">Search</label>
+    <input class="sel" id="q" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search_placeholder' | t }}">
+    <input type="hidden" name="type" value="product">
+    <button class="btn dark" type="submit">Search</button>
+  </form>
+  {%- if search.performed -%}
+    {%- paginate search.results by 12 -%}
+      <p class="count">{{ search.results_count }} {% if search.results_count == 1 %}result{% else %}results{% endif %}</p>
+      <div class="grid">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'product-card', product: item %}
+          {%- endif -%}
+        {%- else -%}
+          <p class="empty">No bags match your search. Try another word.</p>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="pager" aria-label="Pagination">
+          {%- if paginate.previous -%}<a class="btn line" href="{{ paginate.previous.url }}">Previous</a>{%- endif -%}
+          <span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a class="btn line" href="{{ paginate.next.url }}">Next</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Search page",
+  "settings": []
+}
+{% endschema %}
