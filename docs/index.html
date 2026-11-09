@@ -81,6 +81,12 @@ img{max-width:100%}
 .banner a{display:block;position:relative;text-decoration:none}
 .banner img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:50% 55%}
 @media (min-width:700px){.banner img{aspect-ratio:1776/896;max-height:620px}}
+.banner .tx{position:absolute;left:0;right:0;top:16px;text-align:center;padding:0 16px;pointer-events:none}
+.banner .tx small{display:block;font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--b700)}
+.banner .tx b{display:block;margin-top:4px;font-family:var(--serif);font-weight:700;font-size:clamp(1.9rem,9vw,2.6rem);line-height:1.05;color:var(--b900);letter-spacing:-.01em}
+.banner .tx b em{font-style:italic;font-weight:500;color:var(--b600)}
+@media (max-width:699px){.banner a{display:flex;flex-direction:column}.banner .tx{position:static;order:-1;padding:18px 16px 4px}.banner img{aspect-ratio:16/10;object-position:50% 60%}}
+@media (min-width:700px){.banner .tx{right:auto;left:clamp(24px,6vw,96px);top:50%;transform:translateY(-50%);text-align:left;max-width:30%}.banner .tx b{font-size:clamp(2.4rem,4.6vw,4.4rem)}}
 .banner .cta{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);white-space:nowrap}
 @media (min-width:700px){.banner .cta{bottom:22px}}
 /* hero */
@@ -324,6 +330,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   <section class="banner" aria-label="bag.Ze featured bag">
     <a href="#collection">
       <img src="img/banner.webp" srcset="img/banner-900.webp 900w, img/banner.webp 1776w" sizes="100vw" width="1776" height="896" alt="Black buckled backpack on a white desk beside a laptop and books" fetchpriority="high">
+      <span class="tx"><small>New season</small><b>Meet <em>New</em> Fashion</b></span>
       <span class="btn dark cta">Shop the collection <svg class="i"><use href="#i-arrow"/></svg></span>
     </a>
   </section>
