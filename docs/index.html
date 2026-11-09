@@ -89,6 +89,24 @@ img{max-width:100%}
 @media (min-width:700px){.banner .tx{right:auto;left:clamp(24px,6vw,96px);top:50%;transform:translateY(-50%);text-align:left;max-width:30%}.banner .tx b{font-size:clamp(2.4rem,4.6vw,4.4rem)}}
 .banner .cta{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);white-space:nowrap}
 @media (min-width:700px){.banner .cta{bottom:22px}}
+/* lookbook */
+.look{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:800px){.look{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}}
+.lk{position:relative;display:block;padding:0;border:0;border-radius:18px;overflow:hidden;background:var(--b200);aspect-ratio:1/1;text-decoration:none;color:#fff;text-align:left}
+.lk.w{grid-column:span 2;aspect-ratio:2/1}
+.lk img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.lk:hover img{transform:scale(1.04)}
+.lk::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(26,17,10,.6))}
+.lk.w::after{display:none}
+.lk span{position:absolute;left:12px;bottom:10px;z-index:1;font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.lk.w span{color:var(--b900);text-shadow:none}
+.lk.txt{display:flex;flex-direction:column;justify-content:center;gap:10px;padding:clamp(16px,4vw,36px);background:var(--b900)}
+.lk.txt::after{display:none}
+@media (min-width:800px){.lk.txt{aspect-ratio:auto}}
+.lk.txt small{position:static;font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.lk.txt b{font-family:var(--serif);font-size:clamp(1.4rem,4.4vw,2.4rem);line-height:1.1;font-weight:700}
+.lk.txt b em{color:var(--gold);font-weight:500}
+.lk.txt i{font-style:normal;display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:.9rem;color:var(--gold)}
 /* hero */
 .hero{background:radial-gradient(120% 90% at 85% 0%,#4a3321 0%,var(--b900) 45%,var(--b950) 100%);color:#fff;padding:clamp(40px,8vw,96px) 0 clamp(84px,12vw,128px)}
 .hero-grid{display:grid;gap:34px;align-items:center}
@@ -362,6 +380,18 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   <div class="container">
     <div class="cats" id="cats"></div>
   </div>
+
+  <section class="section container" id="lookbook" style="scroll-margin-top:72px" aria-label="Lookbook">
+    <div class="sec-head"><span class="eyebrow">Lookbook</span><h2>Styled for every day</h2></div>
+    <div class="look">
+      <a class="lk w" href="#collection"><img src="img/banner-900.webp" width="900" height="454" loading="lazy" alt="Black buckled backpack on a white desk"><span>Backpacks</span></a>
+      <button class="lk" type="button" data-act="quick" data-id="saddle"><img src="img/saddle-worn.webp" width="493" height="493" loading="lazy" alt="Brown Sugar Saddle Bag worn over a cream coat"><span>Saddle Bag</span></button>
+      <button class="lk" type="button" data-act="quick" data-id="teddy"><img src="img/teddy-tote.webp" width="493" height="493" loading="lazy" alt="Black Teddy Tote Bag"><span>Teddy Tote</span></button>
+      <button class="lk" type="button" data-act="quick" data-id="saddle"><img src="img/saddle-studio.webp" width="493" height="493" loading="lazy" alt="Brown Sugar Saddle Bag in studio"><span>In the studio</span></button>
+      <button class="lk" type="button" data-act="quick" data-id="saddle"><img src="img/saddle-held.webp" width="493" height="493" loading="lazy" alt="Brown Sugar Saddle Bag held in hand"><span>In hand</span></button>
+      <a class="lk txt w" href="#collection"><small>New season</small><b>Meet <em>New</em> Fashion</b><i>Shop all bags <svg class="i"><use href="#i-arrow"/></svg></i></a>
+    </div>
+  </section>
 
   <section class="section container" id="collection" style="scroll-margin-top:72px">
     <div class="sec-head">
