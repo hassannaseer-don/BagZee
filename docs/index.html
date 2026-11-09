@@ -9,7 +9,7 @@
 <meta property="og:title" content="bag.Ze | Handcrafted Bags &amp; Leather Goods">
 <meta property="og:description" content="Handbags, crossbody bags, backpacks, duffles and pouches. Order in one tap on WhatsApp.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://hassannaseer-don.github.io/BagZee/img/saddle-worn.webp">
+<meta property="og:image" content="https://hassannaseer-don.github.io/BagZee/img/banner.webp">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%232c1e13%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-family=%27Georgia,serif%27 font-size=%2738%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23e9d3a1%27%3Eb%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,6 +76,13 @@ img{max-width:100%}
 @media (min-width:900px){.nav{display:flex}.only-mobile{display:none}.logo{margin-right:0}.head-in{gap:12px}.spacer{flex:1}}
 .spacer{flex:0}
 
+/* banner */
+.banner{background:#f4f4f3;border-bottom:1px solid var(--b200)}
+.banner a{display:block;position:relative;text-decoration:none}
+.banner img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:50% 55%}
+@media (min-width:700px){.banner img{aspect-ratio:1776/896;max-height:620px}}
+.banner .cta{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);white-space:nowrap}
+@media (min-width:700px){.banner .cta{bottom:22px}}
 /* hero */
 .hero{background:radial-gradient(120% 90% at 85% 0%,#4a3321 0%,var(--b900) 45%,var(--b950) 100%);color:#fff;padding:clamp(40px,8vw,96px) 0 clamp(84px,12vw,128px)}
 .hero-grid{display:grid;gap:34px;align-items:center}
@@ -314,6 +321,13 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
 </header>
 
 <main id="top">
+  <section class="banner" aria-label="bag.Ze featured bag">
+    <a href="#collection">
+      <img src="img/banner.webp" srcset="img/banner-900.webp 900w, img/banner.webp 1776w" sizes="100vw" width="1776" height="896" alt="Black buckled backpack on a white desk beside a laptop and books" fetchpriority="high">
+      <span class="btn dark cta">Shop the collection <svg class="i"><use href="#i-arrow"/></svg></span>
+    </a>
+  </section>
+
   <section class="hero">
     <div class="container hero-grid">
       <div>
