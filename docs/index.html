@@ -171,6 +171,9 @@ img{max-width:100%}
 .tile-btn.on{color:var(--heart)}
 .tile-btn.on .i{fill:currentColor}
 .card-body{display:flex;flex-direction:column;gap:6px;padding:12px;flex:1}
+.card .mat{font-size:.74rem;line-height:1.3;color:var(--s500)}
+.qv-mat{display:flex;flex-direction:column;gap:2px;margin:12px 0 2px;padding:10px 12px;border:1px solid var(--b200);border-radius:12px;background:var(--b100);font-size:.92rem;color:var(--s800)}
+.qv-mat b{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--b700)}
 .card .cat-l{font-size:.64rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--s400)}
 .card h3{font-size:.9rem;font-weight:600;line-height:1.3;color:var(--s900);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
 .price{font-family:var(--serif);font-weight:700;font-size:1.05rem;color:var(--b800)}
@@ -746,7 +749,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
           '<button class="tile-btn heart'+(wish[p.id]?' on':'')+'" type="button" data-act="wish" data-id="'+p.id+'" aria-pressed="'+(!!wish[p.id])+'" aria-label="Save '+p.name+' to wishlist">'+ico('i-heart')+'</button>'+
           '<button class="tile-btn eye" type="button" data-act="quick" data-id="'+p.id+'" aria-label="Quick view '+p.name+'">'+ico('i-eye')+'</button>'+
         '</div>'+
-        '<div class="card-body"><span class="cat-l">'+p.type+'</span><h3>'+p.name+'</h3>'+priceHtml(p)+
+        '<div class="card-body"><span class="cat-l">'+p.type+'</span><h3>'+p.name+'</h3>'+(MAT[p.id]?'<p class="mat">'+MAT[p.id]+'</p>':'')+priceHtml(p)+
           '<button class="btn dark" type="button" data-act="add" data-id="'+p.id+'">Add to order</button></div>'+
       '</article>';
     }).join('') : '<div class="empty">No bags match your search.<br><button class="link-btn" type="button" data-act="clear">Clear search and filters</button></div>';
@@ -911,6 +914,8 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   function toast(msg){ var t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(function(){ t.classList.remove('show'); }, 1800); }
 
   /* quick view */
+  /* Materials come from the product pages on atailorson.com. A bag with no entry shows "ask us on WhatsApp". */
+  var MAT = {"saddle":"Faux leather","teddy":"Premium vegan leather","sienna":"Premium suede-finish material","basic-black":"Premium vegan leather","basic-brown":"Premium vegan leather","black-saddle":"Faux leather","mag-brown":"Premium synthetic leather","lilac":"Premium faux leather","mag-black":"High-quality faux leather","panda":"Premium faux leather","tokyo":"Durable Cordura nylon","premium-cross":"High-quality faux leather","teddy-cross":"Durable Cordura nylon","monogram":"Durable Cordura nylon","croissant":"Synthetic suede leather","la-cross":"Durable Cordura nylon","mark":"Premium synthetic leather","brown-mark":"Premium textured synthetic leather","vens":"Synthetic leather with a water-repellent shell","teddy-bp":"Synthetic leather","la-bp":"Synthetic leather","cairo":"Synthetic leather","ace":"Synthetic leather","mid":"Synthetic leather with a water-repellent shell","snake":"Synthetic leather","trex-bp":"Synthetic leather","teddy-duffle":"Textured synthetic leather","gg-stripe":"Textured synthetic leather","choco":"Ultra-soft teddy fleece","coal":"Textured synthetic leather","basic-duffle":"Textured synthetic leather","coffee":"Textured synthetic leather","hybrid":"Durable, high-quality fabric","tech-organizer":"Premium textured synthetic leather","tech-pouch":"Polyester and polyethylene","suede-toiletry":"Faux leather with synthetic suede","black-toiletry":"Durable shell with vegan leather trims","navy-toiletry":"Faux leather with synthetic suede","olive-toiletry":"Faux leather with synthetic suede","berry":"Durable shell with vegan leather trims"};
   function openQuick(id){
     var p = byId(id); if (!p) return;
     var thumbs = p.imgs.length > 1 ? '<div class="qv-thumbs">' + p.imgs.map(function(s,i){
@@ -920,6 +925,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     $('#qvBody').innerHTML =
       '<div class="qv-media"><div class="qv-main" id="qvMain">'+img(p.imgs[0], p.name, false)+'</div>'+thumbs+'</div>'+
       '<div class="qv-info"><span class="eyebrow">'+p.type+'</span><h2>'+p.name+'</h2>'+priceHtml(p)+
+      '<p class="qv-mat"><b>Material</b>'+(MAT[id]||'Ask us on WhatsApp for the exact material')+'</p>'+
       '<p>'+(SHOW_WAS ? 'This is the pre-order price. ' : 'Pre-orders are open. ')+'Add this bag to your order list, or message us directly on WhatsApp.</p>'+
       '<div class="qv-actions">'+
         '<button class="btn primary block" type="button" data-act="add" data-id="'+id+'">Add to order</button>'+
