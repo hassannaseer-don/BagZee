@@ -258,6 +258,14 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
 .tot span:last-child{font-family:var(--serif);font-weight:700;font-size:1.5rem}
 .status{font-size:.82rem;color:var(--b700);min-height:1.2em;text-align:center}
 .pay-lead{font-size:.95rem;color:var(--s600);max-width:60ch}
+.pay-tabs{display:flex;width:100%;max-width:420px;padding:4px;margin:0 0 14px;background:#fff;border:1px solid var(--b200);border-radius:999px}
+.pay-tabs button{flex:1;min-height:46px;padding:0 18px;border:0;border-radius:999px;background:transparent;color:var(--s600);font:inherit;font-size:.95rem;font-weight:600;cursor:pointer}
+.pay-tabs button[aria-selected="true"]{background:var(--b900);color:#fff}
+.pay-tabs button:focus-visible{outline:2px solid var(--b500);outline-offset:2px}
+.pay-region{display:flex;gap:10px;align-items:flex-start;margin:0 0 18px;padding:12px 14px;border-radius:14px;background:#fff;border:1px solid var(--b200);font-size:.92rem;color:var(--s700);max-width:70ch}
+.pay-region b{color:var(--s900)}
+.pay-grp{margin:6px 2px 0;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--b700)}
+.field[hidden]{display:none}
 .pay-grid{display:grid;gap:14px;grid-template-columns:1fr}
 .pay-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
 .pay-adv{font-size:.82rem;font-weight:600;color:var(--b800);background:var(--b100);border-radius:12px;padding:10px 12px;margin:0}
@@ -436,9 +444,14 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
       <div class="sec-head">
         <span class="eyebrow">Payment</span>
         <h2>Pay the way that suits you</h2>
-        <p class="pay-lead">Choose a method when you place your order. We confirm the total and the delivery date with you before you pay.</p>
+        <p class="pay-lead">Choose your region, then a method when you place your order. We confirm the total and the delivery date with you before you pay.</p>
       </div>
-      <div class="pay-grid" id="payGrid"></div>
+      <div class="pay-tabs" role="tablist" aria-label="Payment region">
+        <button type="button" role="tab" id="tabpk" data-act="payregion" data-id="pk" aria-selected="true" aria-controls="payGrid">Pakistan</button>
+        <button type="button" role="tab" id="tabintl" data-act="payregion" data-id="intl" aria-selected="false" aria-controls="payGrid">International</button>
+      </div>
+      <p class="pay-region" id="payRegion"></p>
+      <div class="pay-grid" id="payGrid" role="tabpanel"></div>
     </div>
   </section>
 </main>
@@ -458,7 +471,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
         <h4>Help</h4>
         <ul>
           <li><a href="#order-how">How ordering works</a></li>
-          <li style="font-size:.82rem;color:var(--s400);max-width:30ch">Pay by Easypaisa, JazzCash, NayaPay or bank transfer. Cash on delivery needs a 25% advance.</li>
+          <li style="font-size:.82rem;color:var(--s400);max-width:30ch">Pakistan: Easypaisa, JazzCash, NayaPay or bank transfer. Cash on delivery needs a 25% advance. International: Wise or Payoneer.</li>
           <li><a id="waFoot" href="https://wa.me/923154676618" target="_blank" rel="noopener">Order on WhatsApp</a></li>
           <li><button class="lnk" type="button" data-act="cart">Your order list</button></li>
         </ul>
@@ -498,7 +511,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
         <div class="field"><label for="fPhone">Phone</label><input id="fPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="03XX XXXXXXX"></div>
       </div>
       <div class="field"><label for="fCity">City</label><input id="fCity" autocomplete="address-level2" placeholder="Lahore"></div>
-      <div class="field"><label for="fAddr">Delivery address</label><textarea id="fAddr" autocomplete="street-address" placeholder="House, street, area"></textarea></div>
+      <div class="field"><label for="fAddr">Delivery address</label><textarea id="fAddr" autocomplete="street-address" placeholder="House, street, area (add your country if outside Pakistan)"></textarea></div>
       <fieldset class="pay" id="payBox">
         <legend>Payment method</legend>
         <div class="pay-opts" id="payOpts"></div>
@@ -581,8 +594,13 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     {id:'ep',   label:'Easypaisa',        sub:'Send the amount from your Easypaisa app', how:'Send the order total to our Easypaisa account, then add the payment screenshot to your order.', details:[]},
     {id:'jc',   label:'JazzCash',         sub:'Send the amount from your JazzCash app', how:'Send the order total to our JazzCash account, then add the payment screenshot to your order.', details:[]},
     {id:'np',   label:'NayaPay',          sub:'Send the amount from your NayaPay app', how:'Send the order total to our NayaPay account, then add the payment screenshot to your order.', details:[]},
-    {id:'bank', label:'Bank transfer',    sub:'Transfer to our bank account', how:'Transfer the order total to our bank account, then add the transfer receipt to your order.', details:[]}
+    {id:'bank', label:'Bank transfer',    sub:'Transfer to our bank account', how:'Transfer the order total to our bank account, then add the transfer receipt to your order.', details:[]},
+    {id:'wise', label:'Wise',            sub:'International payment from your Wise account', how:'Send the order total through Wise. We confirm the amount in your currency on WhatsApp first, then add the payment screenshot to your order.', details:[]},
+    {id:'payo', label:'Payoneer',        sub:'International payment from your Payoneer account', how:'Send the order total through Payoneer. We confirm the amount in your currency on WhatsApp first, then add the payment screenshot to your order.', details:[]}
   ];
+  /* Which payment methods belong to which region. */
+  var REGION = {cod:'pk', ep:'pk', jc:'pk', np:'pk', bank:'pk', wise:'intl', payo:'intl'};
+  var payRegion = 'pk';
   var ADVANCE_PCT = 25;   /* advance for cash on delivery */
 
   /* Where the order and payment screenshot are sent. Paste the web app URL of the Google Apps Script
@@ -799,6 +817,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     var payLines = '\nPayment: ' + pay.label;
     if (payId === 'cod') payLines += '\nAdvance (' + ADVANCE_PCT + '%): ' + fmt(now) + ' via ' + payById($('#advVia').value || 'ep').label + '\nBalance on delivery: ' + fmt(total - now);
     else payLines += '\nPaid or to pay now: ' + fmt(now);
+    if (REGION[payId] === 'intl') payLines += '\nInternational order: please confirm my country, shipping charges and the total in my currency.';
     payLines += '\nPayment screenshot: ' + (proofData ? (PROOF_ENDPOINT ? 'uploaded with this order' : 'I will attach it in this chat') : 'not added yet');
     var text = 'bag.Ze order\nName: ' + v('#fName') + '\nPhone: ' + v('#fPhone') + '\nCity: ' + v('#fCity') + '\nAddress: ' + v('#fAddr') + payLines +
       '\n\nItems:\n' + (lines.length ? lines.join('\n') : '- none yet') + '\n\nTotal: ' + fmt(total);
@@ -807,9 +826,15 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     renderDue();
   }
   ['#fName','#fPhone','#fCity','#fAddr'].forEach(function(s){ $(s).addEventListener('input', buildSummary); });
-  var PAY_ICON = {cod:'i-pouch', ep:'i-wallet', jc:'i-wallet', np:'i-wallet', bank:'i-bank'};
+  var PAY_ICON = {cod:'i-pouch', ep:'i-wallet', jc:'i-wallet', np:'i-wallet', bank:'i-bank', wise:'i-wallet', payo:'i-wallet'};
   function renderPayGrid(){
-    $('#payGrid').innerHTML = PAY.map(function(o){
+    var notes = {
+      pk: '<span><b>Delivery in 3-4 working days</b> after your order is confirmed. Cash on delivery needs a '+ADVANCE_PCT+'% advance.</span>',
+      intl: '<span><b>International delivery</b> is available to several countries. Prices on this site are in PKR. We confirm your country, shipping charges, delivery time and the total in your currency on WhatsApp before you pay.</span>'
+    };
+    $('#payRegion').innerHTML = notes[payRegion];
+    Array.prototype.forEach.call(document.querySelectorAll('.pay-tabs button'), function(t){ t.setAttribute('aria-selected', t.getAttribute('data-id') === payRegion); });
+    $('#payGrid').innerHTML = PAY.filter(function(o){ return REGION[o.id] === payRegion; }).map(function(o){
       var det = o.details.length
         ? '<dl class="pay-det">' + o.details.map(function(d){ return '<div><dt>'+d.k+'</dt><dd>'+d.v+'</dd></div>'; }).join('') + '</dl>' +
           '<button class="copy" type="button" data-act="paycopy" data-id="'+o.id+'">Copy details</button>'
@@ -818,12 +843,14 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     }).join('');
   }
   function renderPay(){
+    var GRP = {pk:'Pakistan', intl:'International'}, lastR = '';
     $('#payOpts').innerHTML = PAY.map(function(o){
-      return '<label class="pay-opt"><input type="radio" name="pay" value="'+o.id+'"'+(o.id===payId?' checked':'')+'><span class="dot"></span><span><b>'+o.label+'</b><small>'+o.sub+'</small></span></label>';
+      var head = REGION[o.id] !== lastR ? '<p class="pay-grp">'+GRP[REGION[o.id]]+'</p>' : ''; lastR = REGION[o.id];
+      return head + '<label class="pay-opt"><input type="radio" name="pay" value="'+o.id+'"'+(o.id===payId?' checked':'')+'><span class="dot"></span><span><b>'+o.label+'</b><small>'+o.sub+'</small></span></label>';
     }).join('');
     var o = payById(payId);
     var sel = $('#advVia'), keep = sel.value;
-    sel.innerHTML = PAY.filter(function(x){ return x.id !== 'cod'; }).map(function(x){ return '<option value="'+x.id+'">'+x.label+'</option>'; }).join('');
+    sel.innerHTML = PAY.filter(function(x){ return x.id !== 'cod' && REGION[x.id] === 'pk'; }).map(function(x){ return '<option value="'+x.id+'">'+x.label+'</option>'; }).join('');
     if (keep) sel.value = keep;
     $('#payNote').textContent = o.id === 'cod' ? 'Pay a ' + ADVANCE_PCT + '% advance first. Your order is confirmed once we receive it. Pay the rest in cash to the rider.' :
       (o.details.length ? 'Pay to: ' + o.details.map(function(d){ return d.k + ' ' + d.v; }).join(' · ') : 'We send the ' + o.label + ' account details when we confirm your order. Do not pay before that.');
@@ -972,6 +999,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
       Array.prototype.forEach.call(b.parentNode.children, function(x){ x.setAttribute('aria-pressed', x === b); });
       return;
     }
+    if (act === 'payregion'){ payRegion = id; renderPayGrid(); return; }
     if (act === 'paycopy'){
       var o = payById(id), txt = o.label + '\n' + o.details.map(function(d){ return d.k + ': ' + d.v; }).join('\n');
       try { navigator.clipboard.writeText(txt).then(function(){ toast(o.label + ' details copied'); }, function(){ toast('Select the details and copy them'); }); }
