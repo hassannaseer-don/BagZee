@@ -603,16 +603,12 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   var payRegion = 'pk';
   var ADVANCE_PCT = 25;   /* advance for cash on delivery */
 
-  /* Where the order and payment screenshot are sent. Paste the web app URL of the Google Apps Script
-     from setup/payment-proof.gs here. While this is empty, the page cannot upload the screenshot, so it
-     asks the customer to attach it in the WhatsApp chat instead. */
-  var PROOF_ENDPOINT = '';
   var payId = 'cod';
   function payById(id){ for (var i=0;i<PAY.length;i++){ if (PAY[i].id===id) return PAY[i]; } return PAY[0]; }
 
   /* Crossed-out regular price. Keep this on only if bag.Ze will really charge the regular price after pre-orders end.
      SHOW_WAS = false removes every crossed-out price and discount badge. */
-  var SHOW_WAS = true;
+  var SHOW_WAS = false;
   var WAS_PCT = 15;
 
   var RAW = [
@@ -804,9 +800,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
       ? '<div><span>Pay now ('+ADVANCE_PCT+'% advance)</span><b>'+fmt(now)+'</b></div><div><span>Pay the rider on delivery</span><b>'+fmt(t - now)+'</b></div>'
       : '<div><span>Pay now</span><b>'+fmt(now)+'</b></div>';
     $('#advBox').hidden = payId !== 'cod';
-    $('#proofHelp').textContent = PROOF_ENDPOINT
-      ? 'Add the screenshot after you pay. It is sent to bag.Ze with your order.'
-      : 'Add the screenshot after you pay. When WhatsApp opens, attach the same screenshot in the chat.';
+    $('#proofHelp').textContent = 'Add the screenshot after you pay. When WhatsApp opens, attach the same screenshot in the chat.';
   }
   var proofData = '';
   function buildSummary(){
@@ -818,7 +812,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     if (payId === 'cod') payLines += '\nAdvance (' + ADVANCE_PCT + '%): ' + fmt(now) + ' via ' + payById($('#advVia').value || 'ep').label + '\nBalance on delivery: ' + fmt(total - now);
     else payLines += '\nPaid or to pay now: ' + fmt(now);
     if (REGION[payId] === 'intl') payLines += '\nInternational order: please confirm my country, shipping charges and the total in my currency.';
-    payLines += '\nPayment screenshot: ' + (proofData ? (PROOF_ENDPOINT ? 'uploaded with this order' : 'I will attach it in this chat') : 'not added yet');
+    payLines += '\nPayment screenshot: ' + (proofData ? 'I will attach it in this chat' : 'not added yet');
     var text = 'bag.Ze order\nName: ' + v('#fName') + '\nPhone: ' + v('#fPhone') + '\nCity: ' + v('#fCity') + '\nAddress: ' + v('#fAddr') + payLines +
       '\n\nItems:\n' + (lines.length ? lines.join('\n') : '- none yet') + '\n\nTotal: ' + fmt(total);
     $('#summary').value = text;
@@ -881,14 +875,6 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     };
     fr.readAsDataURL(f);
   });
-  function sendProof(){
-    if (!PROOF_ENDPOINT) return Promise.resolve(false);
-    var ids = Object.keys(cart).filter(byId), total = cartTotal(), now = dueNow();
-    var body = { name:$('#fName').value.trim(), phone:$('#fPhone').value.trim(), city:$('#fCity').value.trim(), address:$('#fAddr').value.trim(),
-      payment:payById(payId).label, advanceVia: payId === 'cod' ? payById($('#advVia').value).label : '', total:total, dueNow:now,
-      items: ids.map(function(id){ return cart[id] + ' x ' + byId(id).name; }).join(', '), screenshot:proofData };
-    return fetch(PROOF_ENDPOINT, { method:'POST', mode:'no-cors', body:JSON.stringify(body) }).then(function(){ return true; }, function(){ return false; });
-  }
   function ready(){
     var st = $('#status');
     if (!Object.keys(cart).filter(byId).length){ st.textContent = 'Add at least one bag first.'; return false; }
@@ -898,11 +884,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   $('#waOrder').addEventListener('click', function(e){
     if (!ready()){ e.preventDefault(); return; }
     var st = $('#status');
-    st.textContent = 'WhatsApp opened with your order. Press send there to place it.' + (proofData && !PROOF_ENDPOINT ? ' Attach your payment screenshot in the chat.' : '');
-    if (proofData && PROOF_ENDPOINT){
-      st.textContent = 'Sending your screenshot...';
-      sendProof().then(function(ok){ st.textContent = ok ? 'Order and screenshot sent. Press send in WhatsApp to finish.' : 'The screenshot could not be sent. Attach it in the WhatsApp chat.'; });
-    }
+    st.textContent = 'WhatsApp opened with your order. Press send there to place it.' + (proofData ? ' Attach your payment screenshot in the chat.' : '');
   });
 
   /* panels */
