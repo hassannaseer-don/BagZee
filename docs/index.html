@@ -76,6 +76,13 @@ img{max-width:100%}
 @media (min-width:900px){.nav{display:flex}.only-mobile{display:none}.logo{margin-right:0}.head-in{gap:12px}.spacer{flex:1}}
 .spacer{flex:0}
 
+/* trust strip */
+.trust{background:var(--b900);color:#fff}
+.trust ul{list-style:none;margin:0 auto;padding:14px 16px;max-width:1180px;display:grid;gap:10px}
+.trust li{display:flex;align-items:center;gap:10px;font-size:.92rem;line-height:1.3;color:var(--b100)}
+.trust li svg{flex:none;width:20px;height:20px;color:var(--gold)}
+.trust li b{color:#fff;font-weight:600}
+@media (min-width:760px){.trust ul{grid-template-columns:repeat(3,1fr);padding:16px 24px;gap:24px}.trust li{justify-content:center;font-size:.95rem}}
 /* banner */
 .banner{background:#f4f4f3;border-bottom:1px solid var(--b200)}
 .banner a{display:block;position:relative;text-decoration:none}
@@ -172,7 +179,7 @@ img{max-width:100%}
 .tile-btn.on .i{fill:currentColor}
 .card-body{display:flex;flex-direction:column;gap:6px;padding:12px;flex:1}
 .card .mat{font-size:.74rem;line-height:1.3;color:var(--s500)}
-.qv-mat{display:flex;flex-direction:column;gap:2px;margin:12px 0 2px;padding:10px 12px;border:1px solid var(--b200);border-radius:12px;background:var(--b100);font-size:.92rem;color:var(--s800)}
+.qv-mat{display:flex;flex-direction:column;gap:2px;margin:10px 0 0;padding:10px 12px;border:1px solid var(--b200);border-radius:12px;background:var(--b100);font-size:.92rem;color:var(--s800)}
 .qv-mat b{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--b700)}
 .card .cat-l{font-size:.64rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--s400)}
 .card h3{font-size:.9rem;font-weight:600;line-height:1.3;color:var(--s900);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
@@ -355,6 +362,13 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
       <span class="btn dark cta">Shop the collection <svg class="i"><use href="#i-arrow"/></svg></span>
     </a>
   </section>
+  <div class="trust">
+    <ul>
+      <li><svg class="i"><use href="#i-bag"/></svg><span><b>Delivery in 3-4 working days</b> after your order is confirmed</span></li>
+      <li><svg class="i"><use href="#i-wa"/></svg><span><b>Order in one tap</b> on WhatsApp</span></li>
+      <li><svg class="i"><use href="#i-wallet"/></svg><span><b>Easypaisa, JazzCash, NayaPay</b> or cash on delivery</span></li>
+    </ul>
+  </div>
 
   <div class="container">
     <div class="cats" id="cats"></div>
@@ -900,6 +914,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
     $('#qvBody').innerHTML =
       '<div class="qv-media"><div class="qv-main" id="qvMain">'+img(p.imgs[0], p.name, false)+'</div>'+thumbs+'</div>'+
       '<div class="qv-info"><span class="eyebrow">'+p.type+'</span><h2>'+p.name+'</h2>'+priceHtml(p)+
+      '<p class="qv-mat"><b>Delivery</b>3-4 working days after your order is confirmed</p>'+
       '<p class="qv-mat"><b>Material</b>'+(MAT[id]||'Ask us on WhatsApp for the exact material')+'</p>'+
       '<p>'+(SHOW_WAS ? 'This is the pre-order price. ' : 'Pre-orders are open. ')+'Add this bag to your order list, or message us directly on WhatsApp.</p>'+
       '<div class="qv-actions">'+
