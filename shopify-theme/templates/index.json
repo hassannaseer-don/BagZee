@@ -178,7 +178,7 @@
             "icon": "wallet",
             "title": "Easypaisa",
             "text": "Send the order total to our Easypaisa account, then send the payment screenshot.",
-            "details": "<p>Number: 0315 4676618</p>",
+            "details": "<p>Account title: Hassan Naseer</p><p>Number: 0315 4676618</p>",
             "advance": false
           }
         },
@@ -188,7 +188,7 @@
             "icon": "wallet",
             "title": "JazzCash",
             "text": "Send the order total to our JazzCash account, then send the payment screenshot.",
-            "details": "<p>Number: 0315 4676618</p>",
+            "details": "<p>Account title: Hassan Naseer</p><p>Number: 0315 4676618</p>",
             "advance": false
           }
         },
@@ -198,7 +198,7 @@
             "icon": "wallet",
             "title": "NayaPay",
             "text": "Send the order total to our NayaPay account, then send the payment screenshot.",
-            "details": "<p>Number: 0315 4676618</p>",
+            "details": "<p>Account title: Hassan Naseer</p><p>Number: 0315 4676618</p>",
             "advance": false
           }
         },
