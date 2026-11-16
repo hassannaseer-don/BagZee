@@ -262,12 +262,12 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
 .pay-tabs button{flex:1;min-height:46px;padding:0 18px;border:0;border-radius:999px;background:transparent;color:var(--s600);font:inherit;font-size:.95rem;font-weight:600;cursor:pointer}
 .pay-tabs button[aria-selected="true"]{background:var(--b900);color:#fff}
 .pay-tabs button:focus-visible{outline:2px solid var(--b500);outline-offset:2px}
-.pay-region{display:flex;gap:10px;align-items:flex-start;margin:0 0 18px;padding:12px 14px;border-radius:14px;background:#fff;border:1px solid var(--b200);font-size:.92rem;color:var(--s700);max-width:70ch}
+.pay-region{display:flex;gap:10px;align-items:flex-start;margin:0 0 12px;padding:10px 12px;border-radius:14px;background:#fff;border:1px solid var(--b200);font-size:.88rem;color:var(--s700);max-width:70ch}
 .pay-region b{color:var(--s900)}
 .pay-grp{margin:6px 2px 0;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--b700)}
 .field[hidden]{display:none}
 .pay-grid{display:grid;gap:14px;grid-template-columns:1fr}
-.pay-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.pay-grid{gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
 .pay-adv{font-size:.82rem;font-weight:600;color:var(--b800);background:var(--b100);border-radius:12px;padding:10px 12px;margin:0}
 .due{display:grid;gap:4px;font-size:.88rem}
 .due div{display:flex;justify-content:space-between;gap:10px}
@@ -277,17 +277,24 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
 .proof input[type=file]{width:100%;padding:10px;border:1px dashed var(--b300);border-radius:12px;background:#fff;font-size:.9rem}
 .proof img{width:100%;max-height:260px;object-fit:contain;border-radius:12px;border:1px solid var(--s200);background:#fff}
 .proof small{font-size:.76rem;color:var(--s500)}
-.pay-card{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--b200);border-radius:20px;padding:20px;min-width:0}
-.pay-card .pi{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--b50);color:var(--b700);border:1px solid var(--b200)}
-.pay-card h3{font-size:1.02rem;font-weight:700}
-.pay-card p{font-size:.86rem;color:var(--s600);margin:0}
-.pay-det{display:grid;gap:8px;margin:0}
-.pay-det div{background:var(--b50);border-radius:12px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px;min-width:0}
-.pay-det dt{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--s500)}
-.pay-det dd{margin:0;font-weight:600;font-size:.9rem;overflow-wrap:anywhere;text-align:right;user-select:all}
-.pay-card .copy{align-self:flex-start;min-height:40px;padding:0 16px;border:1px solid var(--s300);border-radius:999px;background:#fff;font-size:.8rem;font-weight:600}
+.pay-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:12px;background:#fff;border:1px solid var(--b200);border-radius:16px;padding:12px 14px;min-width:0}
+.pay-card .pi{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--b50);color:var(--b700);border:1px solid var(--b200)}
+.pc-body{min-width:0}
+.pay-card h3{font-size:1rem;font-weight:700;margin:0}
+.pc-line{font-size:.88rem;color:var(--s600);margin:1px 0 0;overflow-wrap:anywhere}
+.nw{white-space:nowrap}
+.pc-line b{color:var(--s900);font-weight:600}
+.pay-card .copy{min-height:40px;padding:0 14px;border:1px solid var(--s300);border-radius:999px;background:#fff;font-size:.8rem;font-weight:600}
 .pay-card .copy:hover{border-color:var(--b600);color:var(--b700)}
-.pay-soon{font-size:.82rem;color:var(--s600);background:var(--b100);border-radius:12px;padding:10px 12px}
+.pay-how{grid-column:1/-1;margin-top:6px;border-top:1px solid var(--b100)}
+.pay-how summary{display:flex;align-items:center;min-height:40px;list-style:none;cursor:pointer;font-size:.82rem;font-weight:600;color:var(--b700)}
+.pay-how summary::-webkit-details-marker{display:none}
+.pay-how summary::after{content:'+';margin-left:6px;font-size:1rem}
+.pay-how[open] summary::after{content:'\2013'}
+.pay-how p{font-size:.88rem;color:var(--s600);margin:0 0 8px}
+#payment.section{padding-block:clamp(28px,6vw,56px)}
+#payment .sec-head{margin-bottom:14px}
+#payment .sec-head h2{font-size:clamp(1.6rem,4.5vw,2.2rem)}
 .pay{border:0;margin:0;padding:0;min-width:0;display:grid;gap:8px}
 .pay legend{padding:0;font-size:.78rem;font-weight:600;color:var(--s600);margin-bottom:2px}
 .pay-opts{display:grid;gap:8px}
@@ -444,7 +451,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
       <div class="sec-head">
         <span class="eyebrow">Payment</span>
         <h2>Pay the way that suits you</h2>
-        <p class="pay-lead">Choose your region, then a method when you place your order. We confirm the total and the delivery date with you before you pay.</p>
+        <p class="pay-lead">Pick your region and a method. We confirm the total and delivery with you before you pay.</p>
       </div>
       <div class="pay-tabs" role="tablist" aria-label="Payment region">
         <button type="button" role="tab" id="tabpk" data-act="payregion" data-id="pk" aria-selected="true" aria-controls="payGrid">Pakistan</button>
@@ -824,16 +831,16 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   function renderPayGrid(){
     var notes = {
       pk: '<span><b>Delivery in 3-4 working days</b> after your order is confirmed. Cash on delivery needs a '+ADVANCE_PCT+'% advance.</span>',
-      intl: '<span><b>International delivery</b> is available to several countries. Prices on this site are in PKR. We confirm your country, shipping charges, delivery time and the total in your currency on WhatsApp before you pay.</span>'
+      intl: '<span><b>Delivery to several countries.</b> Prices are in PKR. We confirm your country, shipping charges and the total in your currency on WhatsApp before you pay.</span>'
     };
     $('#payRegion').innerHTML = notes[payRegion];
     Array.prototype.forEach.call(document.querySelectorAll('.pay-tabs button'), function(t){ t.setAttribute('aria-selected', t.getAttribute('data-id') === payRegion); });
     $('#payGrid').innerHTML = PAY.filter(function(o){ return REGION[o.id] === payRegion; }).map(function(o){
-      var det = o.details.length
-        ? '<dl class="pay-det">' + o.details.map(function(d){ return '<div><dt>'+d.k+'</dt><dd>'+d.v+'</dd></div>'; }).join('') + '</dl>' +
-          '<button class="copy" type="button" data-act="paycopy" data-id="'+o.id+'">Copy details</button>'
-        : (o.id === 'cod' ? '<p class="pay-adv">'+ADVANCE_PCT+'% advance required to confirm</p>' : '<p class="pay-soon">Account details are shared when we confirm your order.</p>');
-      return '<article class="pay-card"><span class="pi">'+ico(PAY_ICON[o.id])+'</span><h3>'+o.label+'</h3><p>'+o.how+'</p>'+det+'</article>';
+      var line = o.details.length ? o.details.map(function(d){ return '<span class="nw">'+d.v+'</span>'; }).join(' &middot; ')
+        : (o.id === 'cod' ? ADVANCE_PCT+'% advance now, the rest to the rider' : 'Details shared when we confirm your order');
+      var copy = o.details.length ? '<button class="copy" type="button" data-act="paycopy" data-id="'+o.id+'">Copy</button>' : '';
+      return '<article class="pay-card"><span class="pi">'+ico(PAY_ICON[o.id])+'</span><div class="pc-body"><h3>'+o.label+'</h3><p class="pc-line">'+line+'</p></div>'+copy+
+        '<details class="pay-how"><summary>How it works</summary><p>'+o.how+'</p></details></article>';
     }).join('');
   }
   function renderPay(){
