@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#2c1e13">
-<title>bag.Ze | Handcrafted Bags &amp; Leather Goods</title>
-<meta name="description" content="bag.Ze: handcrafted handbags, crossbody bags, backpacks, duffles and pouches. Choose your bags and order in one tap on WhatsApp.">
-<meta property="og:title" content="bag.Ze | Handcrafted Bags &amp; Leather Goods">
-<meta property="og:description" content="Handbags, crossbody bags, backpacks, duffles and pouches. Order in one tap on WhatsApp.">
+<title>BagZee | Bags for Every Day, Made to Be Yours</title>
+<meta name="description" content="Discover the BagZee collection of handbags, crossbody bags, backpacks, duffles and everyday essentials. Explore styles and order directly on WhatsApp.">
+<meta property="og:title" content="BagZee | Bags for Every Day, Made to Be Yours">
+<meta property="og:description" content="Explore the BagZee collection of everyday bags and order directly on WhatsApp.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://hassannaseer-don.github.io/BagZee/img/banner.webp">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%232c1e13%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-family=%27Georgia,serif%27 font-size=%2738%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23e9d3a1%27%3Eb%3C/text%3E%3C/svg%3E">
@@ -347,21 +347,101 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+/* ===== BagZee premium visual refresh; product catalogue and prices intentionally untouched ===== */
+:root{--b50:#fbf8f3;--b100:#f2e9dd;--b200:#e4d4c1;--b300:#c9a77e;--b500:#a77c50;--b600:#8b623d;--b700:#6f4c2e;--b800:#4b3321;--b900:#26180f;--b950:#160e09;--gold:#ead7b2}
+body{background:#fbf8f3;color:#251b15}
+.announce{display:flex;justify-content:center;align-items:center;gap:10px;padding:9px 14px;background:#26180f;color:#f5ecdf;font-size:.68rem;letter-spacing:.13em;text-transform:uppercase}
+.announce a{color:#ead7b2;text-decoration:none;border-bottom:1px solid rgba(234,215,178,.55)}
+.announce-dot{color:#c9a77e}
+.site-head{background:rgba(251,248,243,.96);border-bottom:1px solid rgba(111,76,46,.12)}
+.head-in{min-height:76px}
+.logo b{font-size:1.85rem;letter-spacing:-.045em}
+.logo b span{color:#a77c50}
+.logo small{font-size:.57rem;letter-spacing:.24em}
+.nav{gap:32px}
+.nav a{font-size:.78rem;letter-spacing:.04em}
+.icon-btn{width:46px;height:46px}
+.banner{background:#e8dfd3;border:0;overflow:hidden}
+.banner a{isolation:isolate}
+.banner img{aspect-ratio:16/8.2;max-height:660px;object-position:center 54%}
+.banner a:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(251,248,243,.82) 0%,rgba(251,248,243,.55) 34%,rgba(251,248,243,0) 70%);pointer-events:none;z-index:0}
+.banner .tx{z-index:1;left:clamp(24px,8vw,140px);right:auto;top:50%;transform:translateY(-50%);width:min(46%,560px);text-align:left;padding:0}
+.banner .tx small{font-size:.67rem;letter-spacing:.22em;color:#745438}
+.banner .tx b{font-size:clamp(2.5rem,5.2vw,5.2rem);line-height:1.02;letter-spacing:-.045em;color:#26180f;margin-top:16px}
+.banner .tx b em{color:#8b623d}
+.banner .tx p{max-width:390px;margin-top:18px;color:#5f4b3a;font-size:clamp(.85rem,1.2vw,1rem);line-height:1.75}
+.banner .cta{border-radius:3px;min-height:50px;padding-inline:25px;letter-spacing:.02em}
+.trust{background:#26180f}
+.trust ul{max-width:1320px;padding-block:18px}
+.trust li{font-size:.78rem;letter-spacing:.01em;color:#e7d9c8}
+.trust li svg{color:#c9a77e}
+.section{padding-block:clamp(54px,8vw,96px)}
+.sec-head{margin-bottom:28px}
+.sec-head h2{font-size:clamp(2rem,4vw,3.15rem);letter-spacing:-.035em;color:#26180f}
+.look{gap:12px}
+.lk{border-radius:3px}
+.lk span{font-size:.67rem;letter-spacing:.16em}
+.lk.txt{background:#26180f}
+.toolbar{gap:14px}
+.search input,.sort{border-radius:3px;border-color:#dfd3c5;background:#fff}
+.chip{border-radius:3px;letter-spacing:.02em}
+.grid{gap:clamp(12px,1.7vw,24px)}
+.card{border:0;border-radius:2px;background:transparent;box-shadow:none}
+.card:hover{border-color:transparent;box-shadow:none}
+.tile{background:#f0e9df;border-radius:2px;overflow:hidden}
+.tile>img{transition:transform .5s}
+.card:hover .tile>img{transform:scale(1.035)}
+.card-body{padding:13px 2px 4px}
+.card .name{font-size:.9rem;font-weight:600;color:#2c2118}
+.card .price{font-size:.95rem;color:#6f4c2e}
+.card .btn{border-radius:2px;min-height:43px}
+.band{background:#f1e9df}
+.feat{background:rgba(255,255,255,.68);border:1px solid rgba(111,76,46,.1);border-radius:3px;padding:22px}
+.fi{border-radius:3px;background:#e7d7c3}
+.step{border:1px solid #e3d5c5;border-radius:3px;background:#fff;padding:24px}
+.step>b{background:#26180f;border-radius:50%;color:#ead7b2}
+.pay-tabs button,.pay-card{border-radius:3px}
+footer{background:#1b110b}
+@media(min-width:760px){.nav{display:flex}}
+@media(max-width:699px){
+ .announce{font-size:.58rem;gap:7px;letter-spacing:.08em}
+ .head-in{min-height:66px}
+ .logo b{font-size:1.58rem}
+ .banner a{display:block;min-height:0}
+ .banner img{aspect-ratio:4/5;object-position:58% center}
+ .banner a:after{background:linear-gradient(180deg,rgba(251,248,243,.96) 0%,rgba(251,248,243,.82) 28%,rgba(251,248,243,0) 68%)}
+ .banner .tx{position:absolute;left:20px;right:20px;top:24px;transform:none;width:auto;text-align:left;padding:0}
+ .banner .tx small{font-size:.57rem;letter-spacing:.14em}
+ .banner .tx b{font-size:clamp(2.25rem,11vw,3.5rem);margin-top:9px;line-height:1}
+ .banner .tx p{font-size:.78rem;line-height:1.55;max-width:290px;margin-top:10px}
+ .banner .cta{left:20px;top:auto;bottom:18px;min-height:44px;padding-inline:18px;font-size:.78rem}
+ .trust ul{gap:12px;padding:14px 20px}
+ .trust li{font-size:.72rem}
+ .section{padding-block:48px}
+ .sec-head h2{font-size:2.15rem}
+ .card-body{padding-top:10px}
+ .card .name{font-size:.78rem}
+ .card .price{font-size:.86rem}
+ .feat{padding:16px}
+}
+@media(prefers-reduced-motion:reduce){.tile>img{transition:none}}
+
 </style>
 </head>
 <body>
 
-<div class="announce">Pre-orders open · Pick your bags and <a href="#order-how" data-act="close">order on WhatsApp</a></div>
+<div class="announce"><span>THE BAGZEE COLLECTION</span><span class="announce-dot">✦</span><a href="#collection" data-act="close">Find your everyday favourite</a></div>
 
 <header class="site-head">
   <div class="container head-in">
     <button class="icon-btn only-mobile" type="button" data-act="menu" aria-label="Open menu"><svg class="i"><use href="#i-menu"/></svg></button>
-    <a class="logo" href="#top" aria-label="bag.Ze home"><b>bag<span>.Ze</span></b><small>Atelier Leather</small></a>
+    <a class="logo" href="#top" aria-label="BagZee home"><b>Bag<span>Zee</span></b><small>Carry your story</small></a>
     <nav class="nav" aria-label="Main">
-      <a href="#collection">Collection</a>
-      <a href="#why">Why bag.Ze</a>
-      <a href="#order-how">How ordering works</a>
-      <a href="#payment">Payment</a>
+      <a href="#collection">Shop</a>
+      <a href="#lookbook">Lookbook</a>
+      <a href="#why">Why BagZee</a>
+      <a href="#order-how">How to order</a>
     </nav>
     <span class="spacer"></span>
     <button class="icon-btn" type="button" data-act="wishlist" aria-label="Open wishlist"><svg class="i"><use href="#i-heart"/></svg><span class="badge" id="wishBadge" hidden>0</span></button>
@@ -373,7 +453,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   <section class="banner" aria-label="bag.Ze featured bag">
     <a href="#collection">
       <img src="img/banner.webp" srcset="img/banner-900.webp 900w, img/banner.webp 1776w" sizes="100vw" width="1776" height="896" alt="Black buckled backpack on a white desk beside a laptop and books" fetchpriority="high">
-      <span class="tx"><small>New season</small><b>Meet <em>New</em> Fashion</b></span>
+      <span class="tx"><small>THE BAGZEE EDIT · EVERYDAY, ELEVATED</small><b>Carry your style.<br><em>Own your story.</em></b><p>Thoughtful styles for the places you go and the things you carry.</p></span>
       <span class="btn dark cta">Shop the collection <svg class="i"><use href="#i-arrow"/></svg></span>
     </a>
   </section>
@@ -404,7 +484,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   <section class="section container" id="collection" style="scroll-margin-top:72px">
     <div class="sec-head">
       <span class="eyebrow">The collection</span>
-      <h2>Shop handcrafted bags</h2>
+      <h2>Find your everyday favourite</h2>
     </div>
     <div class="toolbar">
       <div class="search"><svg class="i"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Search bags, duffles..." aria-label="Search bags" autocomplete="off"></div>
@@ -467,7 +547,7 @@ footer .blurb{font-size:.88rem;max-width:36ch;margin-top:12px}
   <div class="container">
     <div class="foot">
       <div>
-        <a class="logo" href="#top" aria-label="Back to top"><b>bag<span>.Ze</span></b><small>Atelier Leather</small></a>
+        <a class="logo" href="#top" aria-label="Back to top"><b>Bag<span>Zee</span></b><small>Carry your story</small></a>
         <p class="blurb">Handcrafted bags and leather goods for everyday life. Pre-orders are open now.</p>
       </div>
       <div>
